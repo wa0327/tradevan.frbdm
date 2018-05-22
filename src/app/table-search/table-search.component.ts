@@ -5,11 +5,11 @@ import { HttpClient } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
-    selector: 'app-root',
-    templateUrl: 'app.component.html',
-    styleUrls: ['app.component.less']
+    selector: 'app-table-search',
+    templateUrl: 'table-search.component.html',
+    styleUrls: ['table-search.component.less']
 })
-export class AppComponent implements OnInit {
+export class TableSearchComponent implements OnInit {
 
     databases: DatabaseItem[]
 
@@ -20,20 +20,18 @@ export class AppComponent implements OnInit {
     @Input() dataDate: string;
 
     lastQueryArgs: SearchArgs;
-    result: PageData = {
-        total: 0,
-        rows: [],
-        pages: []
-    };
+    result: PageData;
 
-    constructor(private http: HttpClient, private sanitizer: DomSanitizer) {
-    }
+    constructor(private http: HttpClient, private sanitizer: DomSanitizer) { }
 
     ngOnInit() {
-        this.http.get<DatabaseItem[]>('api/databases').subscribe(databases => {
-            this.databases = databases;
-        });
         this.reset();
+        console.log('before');
+        this.http.get<DatabaseItem[]>('/api/databases').subscribe(databases => {
+            console.log('before2');
+            this.databases = databases;
+            console.log('after2');
+        });
     }
 
     search() {
@@ -76,7 +74,18 @@ export class AppComponent implements OnInit {
     }
 
     open_detail(dbId: string, tableId: string) {
+        var param = {
+            term: this.lastQueryArgs.term,
+            db: dbId,
+            tb: tableId
+        };
 
+        var url = `index.aspx/#/table-detail/${dbId}/${tableId}`;
+        if (this.lastQueryArgs.term) {
+            url = `${url}/${this.lastQueryArgs.term}`;
+        }
+
+        window.open(url, '_blank');
     }
 
     highlight(text: string) {
