@@ -4,6 +4,8 @@ import { Component, Input, OnInit, Query } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
 
+import { ApiService, DatabaseItem, TableItem, TableSearchArgs, TableSearchResult } from '../api.service';
+
 @Component({
     selector: 'app-table-search',
     templateUrl: 'table-search.component.html',
@@ -19,18 +21,17 @@ export class TableSearchComponent implements OnInit {
     @Input() forColumn: boolean;
     @Input() dataDate: string;
 
-    lastQueryArgs: SearchArgs;
+    lastQueryArgs: TableSearchArgs;
     result: PageData;
 
-    constructor(private http: HttpClient, private sanitizer: DomSanitizer) { }
+    constructor(
+        private sanitizer: DomSanitizer,
+        private api: ApiService) { }
 
     ngOnInit() {
         this.reset();
-        console.log('before');
-        this.http.get<DatabaseItem[]>('/api/databases').subscribe(databases => {
-            console.log('before2');
+        this.api.getDatabases().subscribe(databases => {
             this.databases = databases;
-            console.log('after2');
         });
     }
 
@@ -96,8 +97,8 @@ export class TableSearchComponent implements OnInit {
             return this.sanitizer.bypassSecurityTrustHtml(text);
     }
 
-    private getQueryArgs(): SearchArgs {
-        var args = new SearchArgs();
+    private getQueryArgs(): TableSearchArgs {
+        var args = new TableSearchArgs();
 
         if (this.db) {
             args.db = this.db.id;
@@ -122,14 +123,12 @@ export class TableSearchComponent implements OnInit {
         return args;
     }
 
-    private getPage(args: SearchArgs, pageIndex: number): Observable<PageData> {
+    private getPage(args: TableSearchArgs, pageIndex: number): Observable<PageData> {
         const pageSize = 10;
         args.page_size = pageSize;
         args.page_index = pageIndex;
 
-        var url = '/api/datatables?' + $.param(args);
-
-        return this.http.get<SearchResult>(url).pipe(map(data => {
+        return this.api.searchDataTables(args).pipe(map(data => {
             var pageArray = [];
             for (var i = Math.max(0, pageIndex - 3); i < pageIndex; i++) {
                 pageArray.push(i);
@@ -149,35 +148,6 @@ export class TableSearchComponent implements OnInit {
             };
         }));
     }
-}
-
-class DatabaseItem {
-    id: string;
-    src: string;
-    name: string;
-}
-
-class TableItem {
-    id: string;
-    db: DatabaseItem;
-    name: string;
-    nameE?: string;
-    dataDate?: string;
-}
-
-class SearchArgs {
-    page_size: number;
-    page_index: number;
-    db: string;
-    term: string;
-    for_table: boolean;
-    for_column: boolean;
-    data_date: string;
-}
-
-class SearchResult {
-    total: number;
-    rows: TableItem[]
 }
 
 class PageData {
