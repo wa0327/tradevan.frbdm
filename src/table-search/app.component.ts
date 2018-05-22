@@ -1,7 +1,7 @@
-import { Component, Input, OnInit, Query } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Component, Input, OnInit, Query } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
@@ -20,7 +20,11 @@ export class AppComponent implements OnInit {
     @Input() dataDate: string;
 
     lastQueryArgs: SearchArgs;
-    result: PageData;
+    result: PageData = {
+        total: 0,
+        rows: [],
+        pages: []
+    };
 
     constructor(private http: HttpClient, private sanitizer: DomSanitizer) {
     }
@@ -47,7 +51,6 @@ export class AppComponent implements OnInit {
             }
         }
 
-        this.result = null;
         this.getPage(args, 0).subscribe(result => {
             this.result = result;
         });
@@ -171,7 +174,7 @@ class SearchResult {
 class PageData {
     total: number;
     rows: TableItem[];
-    page: number;
-    pageMax: number;
+    page?: number;
+    pageMax?: number;
     pages: number[];
 }

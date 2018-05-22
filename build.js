@@ -13,7 +13,6 @@ const webpack = require('webpack');
 
 const logger = node1.createConsoleLogger();
 const host = new node1.NodeJsSyncHost();
-
 const workspaceLoader = new workspaceLoader1.WorkspaceLoader(host);
 var workspace, architect;
 workspaceLoader
@@ -50,20 +49,46 @@ const webpackConfig = builder.buildWebpackConfig(root, projectRoot, host, option
 delete webpackConfig.entry.main;
 webpackConfig.entry['table-search'] = ['src/table-search/app.module.ts'];
 
-host.exists(webpackConfig.output.path)
-    .pipe(ops.concatMap(exists => exists ? host.delete(webpackConfig.output.path) : rxjs.of(null)))
-    .subscribe(() => {});
+// host.exists(webpackConfig.output.path)
+//     .pipe(ops.concatMap(exists => exists ? host.delete(webpackConfig.output.path) : rxjs.of(null)))
+//     .subscribe(() => {});
 
 const webpackCompiler = webpack(webpackConfig);
 webpackCompiler.run((err, stats) => {
-    console.log('Build Completed !!');
+
+
+
+    if (err) {
+        console.error(err);
+    } else {
+        console.info(stats.toString({
+            colors: true,
+            hash: true,
+            timings: true,
+            chunks: true,
+            chunkModules: false,
+            children: false,
+            modules: false,
+            reasons: false,
+            warnings: true,
+            errors: true,
+            assets: true,
+            version: false,
+            errorDetails: false,
+            moduleTrace: false,
+            children: true,
+            assets: true,
+            version: true,
+            reasons: true,
+            chunkModules: false,
+            errorDetails: true,
+            moduleTrace: true,
+        }));
+    }
 })
-
-
 
 // const WebpackDevServer = require('webpack-dev-server');
 // const server = new WebpackDevServer(webpackCompiler, {});
 // server.listen(8080, error => {
 //     console.log(error);
 // });
-
