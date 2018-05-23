@@ -72,8 +72,28 @@
                         <td class="text-center" [innerHtml]="highlight(o.alias)"></td>
                         <td>
                             <div [innerText]="o.remark"></div>
-                            <div *ngIf="o.codeMap.length > 0">
-                                <button type="button" id="cmb_{{o.id}}" class="codemap" (click)="codemapButton_click($event.target)">代碼表</button>
+                            <div *ngIf="o.codeMap.length > 0" #codemap>
+                                <button type="button" class="codemap" (click)="codemapButton_click($event.target)">代碼表</button>
+                                <div class="codemap-popover" style="display: none;">
+                                    <div>
+                                        代碼表
+                                        <button type="button" class="close" ng-click="close()">&times;</button>
+                                    </div>
+                                    <table class="table mb-0">
+                                        <thead class="thead-light text-center">
+                                            <tr>
+                                                <th>代碼</th>
+                                                <th>內容</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="text-center">
+                                            <tr *ngFor="let m of o.codeMap">
+                                                <td [innerText]="m.code"></td>
+                                                <td [innerText]="m.name"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </td>
                     </tr>

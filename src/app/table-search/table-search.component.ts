@@ -87,12 +87,6 @@ export class TableSearchComponent implements OnInit {
     }
 
     open_detail(dbId: string, tableId: string) {
-        var param = {
-            term: this.lastQueryArgs.term,
-            db: dbId,
-            tb: tableId
-        };
-
         var url = `index.aspx/#/table-detail/${dbId}/${tableId}`;
         if (this.lastQueryArgs.term) {
             url = `${url}/${this.lastQueryArgs.term}`;

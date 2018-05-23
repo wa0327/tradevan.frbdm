@@ -1,9 +1,7 @@
-import { Component, Input, OnInit, Query } from '@angular/core';
+import { Component, Input, OnInit, ViewChildren, QueryList, ElementRef } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ApiService, TableDetailItem } from '../api.service';
-
-import * as $ from 'jquery';
 
 @Component({
     selector: 'app-table-detail',
@@ -18,6 +16,7 @@ export class TableDetailComponent implements OnInit {
     private last_codemapButton: HTMLElement;
 
     dt: TableDetailItem;
+    @ViewChildren('codemap') codemaps: QueryList<ElementRef>;
 
     constructor(
         private route: ActivatedRoute,
@@ -31,6 +30,25 @@ export class TableDetailComponent implements OnInit {
         this.term = q['term'];
         this.api.getDataTable(this.dbId, this.tableId).subscribe(dt=>{
             this.dt = dt;
+
+            setTimeout(()=>{
+                for (const e of this.codemaps.toArray()) {
+                    console.log(e);
+                    const $e = $(e.nativeElement);
+                    const $btn = $e.find('button.codemap');
+                    const $table = $e.find('div.codemap-popover');
+                    $table.find('button.close').on('click', ()=>{
+                        $btn.popover('hide');
+                    });
+                    $table.detach();
+                    $btn.popover({
+                        template: '<div class="popover" role="tooltip"><div class="arrow"></div><div class="popover-body px-1 py-1"></div></div>',
+                        html: true,
+                        content: $table[0]
+                    });
+                    $table.show();
+                }
+            }, 1);
         });
     }
 
