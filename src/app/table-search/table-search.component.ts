@@ -3,13 +3,25 @@ import { map } from 'rxjs/operators';
 import { Component, Input, OnInit, Query } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 import { ApiService, DatabaseItem, TableSearchArgs, TableSearchResult } from '../api.service';
+import { TranslationWidth } from '@angular/common';
 
 @Component({
     selector: 'app-table-search',
     templateUrl: 'table-search.component.html',
-    styleUrls: ['table-search.component.less']
+    styleUrls: ['table-search.component.less'],
+    animations: [
+        trigger('fadeInOut', [
+            state('void', style({ opacity: 0 })),
+            transition(':enter', [
+                animate('500ms ease-out', style({
+                    opacity: 1
+                })),
+            ])
+        ])
+    ]
 })
 export class TableSearchComponent implements OnInit {
 

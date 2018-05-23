@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { NgModule, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -29,11 +30,12 @@ const httpInterceptorProviders = [{
     providers: [httpInterceptorProviders, ApiService],
     imports: [
         BrowserModule,
+        BrowserAnimationsModule,
         FormsModule,
+        RouterModule.forRoot(routes, { useHash: true }),
         HttpClientModule,
         BlockUIModule.forRoot(),
-        BlockUIHttpModule.forRoot(),
-        RouterModule.forRoot(routes, { useHash: true })
+        BlockUIHttpModule.forRoot()
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     bootstrap: [AppComponent]
