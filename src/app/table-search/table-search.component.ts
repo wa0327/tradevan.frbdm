@@ -4,7 +4,7 @@ import { Component, Input, OnInit, Query } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
 
-import { ApiService, DatabaseItem, TableItem, TableSearchArgs, TableSearchResult } from '../api.service';
+import { ApiService, DatabaseItem, TableSearchArgs, TableSearchResult } from '../api.service';
 
 @Component({
     selector: 'app-table-search',
@@ -152,7 +152,17 @@ export class TableSearchComponent implements OnInit {
 
 class PageData {
     total: number;
-    rows: TableItem[];
+    rows: {
+        id: string;
+        db: {
+            id: string;
+            src: string;
+            name: string;
+        };
+        name: string;
+        nameE?: string;
+        dataDate?: string;
+    }[];
     page?: number;
     pageMax?: number;
     pages: number[];

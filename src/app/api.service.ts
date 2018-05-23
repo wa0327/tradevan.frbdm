@@ -18,20 +18,17 @@ export class ApiService {
         const url = `${this.baseUrl}/datatables?${$.param(args)}`
         return this.http.get<TableSearchResult>(url);
     }
+
+    getDataTable(dbId: string, tableId: string) {
+        const url = `${this.baseUrl}/databases/${dbId}/datatables/${tableId}`;
+        return this.http.get<TableDetailItem>(url);
+    }
 }
 
 export class DatabaseItem {
     id: string;
     src: string;
     name: string;
-}
-
-export class TableItem {
-    id: string;
-    db: DatabaseItem;
-    name: string;
-    nameE?: string;
-    dataDate?: string;
 }
 
 export class TableSearchArgs {
@@ -46,5 +43,45 @@ export class TableSearchArgs {
 
 export class TableSearchResult {
     total: number;
-    rows: TableItem[]
+    rows: {
+        id: string;
+        db: {
+            id: string;
+            src: string;
+            name: string;
+        };
+        name: string;
+        nameE?: string;
+        dataDate?: string;
+    }[]
+}
+
+export class TableDetailItem {
+    db: {
+        src: string;
+        name: string;
+        dept: string;
+        admin: string;
+        principal: string;
+    };
+    name: string;
+    nameE?: string;
+    remark: string;
+    important: string;
+    dataDate: string;
+    cols: {
+        id: string;
+        name: string;
+        nameE: string,
+        isPK: boolean;
+        nullable: boolean;
+        type: string;
+        length: string;
+        alias: string;
+        remark: string;
+        codeMap: {
+            code: string;
+            name: string;
+        }[]
+    }[];
 }
