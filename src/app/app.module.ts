@@ -10,6 +10,7 @@ import { BlockUIHttpModule } from 'ng-block-ui/http';
 
 import { ApiInterceptor } from './api.interceptor';
 import { ApiService } from './api.service';
+import { EmptyIfNullPipe } from './empty-If-null.pipe';
 import { AppComponent } from './app.component';
 import { TableSearchComponent } from './table-search/table-search.component';
 import { TableDetailComponent } from './table-detail/table-detail.component';
@@ -26,7 +27,11 @@ const httpInterceptorProviders = [{
 }];
 
 @NgModule({
-    declarations: [AppComponent, TableSearchComponent, TableDetailComponent],
+    declarations: [
+        EmptyIfNullPipe,
+        AppComponent,
+        TableSearchComponent,
+        TableDetailComponent],
     providers: [httpInterceptorProviders, ApiService],
     imports: [
         BrowserModule,

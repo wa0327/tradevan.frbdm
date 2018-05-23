@@ -1,3 +1,4 @@
+import { environment } from '../environments/environment';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
@@ -5,9 +6,15 @@ import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class ApiService {
-    private baseUrl = 'http://tradevan:8080/api';
+    private readonly baseUrl: string;
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) {
+        if (environment.production) {
+            this.baseUrl = '/api';
+        } else {
+            this.baseUrl = 'http://tradevan:8080/api';
+        }
+    }
 
     getDatabases() {
         const url = `${this.baseUrl}/databases`;

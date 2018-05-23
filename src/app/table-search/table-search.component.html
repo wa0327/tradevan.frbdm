@@ -54,7 +54,7 @@
                 筆資料
             </div>
         </div>
-        <div *ngIf="result.total > 1" [@fadeInOut]>
+        <div [hidden]="result.total < 1" [@fadeIn]>
             <div class="row">
                 <div *ngFor="let o of result.rows" class="col-lg-3 col-md-4 col-sm-6">
                     <div class="card mt-3">
@@ -62,14 +62,14 @@
                         <div class="card-body">
                             <h5 class="card-title card-link text-truncate" [title]="o.name" [innerHTML]="highlight(o.name)" (click)="open_detail(o.db.id, o.id)">
                             </h5>
-                            <p class="card-text text-truncate mb-2" [innerHtml]="highlight(o.nameE)" [title]="o.nameE"></p>
+                            <p class="card-text text-truncate mb-2" [innerHtml]="highlight(o.nameE | emptyIfNull)" [title]="o.nameE"></p>
                             <footer class="blockquote-footer text-truncate" [innerText]="o.db.name" [title]="o.db.name"></footer>
-                            <footer class="blockquote-footer" [innerText]="o.dataDate + '轉入'" *ngIf="o.dataDate"></footer>
+                            <footer class="blockquote-footer" [innerText]="o.dataDate + '轉入'" [hidden]="!o.dataDate"></footer>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row mt-3" *ngIf="result.pages.length > 1">
+            <div class="row mt-3" [hidden]="result.pages.length < 2">
                 <div class="mx-auto">
                     <ul class="pagination">
                         <li class="page-item" [ngClass]="{disabled: result.page == 0}">

@@ -1,3 +1,4 @@
+import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Component, Input, OnInit, Query } from '@angular/core';
@@ -13,7 +14,7 @@ import { TranslationWidth } from '@angular/common';
     templateUrl: 'table-search.component.html',
     styleUrls: ['table-search.component.less'],
     animations: [
-        trigger('fadeInOut', [
+        trigger('fadeIn', [
             state('void', style({ opacity: 0 })),
             transition(':enter', [
                 animate('500ms ease-out', style({
@@ -41,9 +42,13 @@ export class TableSearchComponent implements OnInit {
         private api: ApiService) { }
 
     ngOnInit() {
+        document.title = '譯碼簿查詢 - FRBDM';
         this.reset();
         this.api.getDatabases().subscribe(databases => {
             this.databases = databases;
+            if (!environment.production) {
+                this.db = databases[0];
+            }
         });
     }
 
@@ -87,7 +92,7 @@ export class TableSearchComponent implements OnInit {
     }
 
     open_detail(dbId: string, tableId: string) {
-        var url = `index.aspx/#/table-detail/${dbId}/${tableId}`;
+        var url = `/#/table-detail/${dbId}/${tableId}`;
         if (this.lastQueryArgs.term) {
             url = `${url}/${this.lastQueryArgs.term}`;
         }

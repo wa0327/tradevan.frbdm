@@ -18,7 +18,7 @@
         </div>
         <div class="form-group col-lg-4 col-md-6">
             <label class="col-form-label">系統轉入年月</label>
-            <pre class="form-control" [innerText]="dt.dataDate"></pre>
+            <pre class="form-control" [innerText]="dt.dataDate | emptyIfNull"></pre>
         </div>
     </div>
     <div class="row">
@@ -32,15 +32,15 @@
         </div>
         <div class="form-group col-lg-6">
             <label class="col-form-label">資料表英文名</label>
-            <pre class="form-control" [innerHtml]="highlight(dt.nameE)"></pre>
+            <pre class="form-control" [innerHtml]="highlight(dt.nameE | emptyIfNull)"></pre>
         </div>
         <div class="form-group col-12">
             <label class="col-form-label">備註</label>
-            <pre class="form-control" [innerText]="dt.remark"></pre>
+            <pre class="form-control" [innerText]="dt.remark | emptyIfNull"></pre>
         </div>
         <div class="form-group col-12">
             <label class="col-form-label">重要欄位說明</label>
-            <pre class="form-control" [innerText]="dt.important"></pre>
+            <pre class="form-control" [innerText]="dt.important | emptyIfNull"></pre>
         </div>
     </div>
     <div class="row">
@@ -65,13 +65,13 @@
                 <tbody>
                     <tr *ngFor="let o of dt.cols">
                         <td [innerHtml]="highlight(o.name)"></td>
-                        <td class="d-none d-lg-table-cell" [innerHtml]="highlight(o.nameE)"></td>
+                        <td class="d-none d-lg-table-cell" [innerHtml]="highlight(o.nameE | emptyIfNull)"></td>
                         <td class="text-center" [innerText]="o.isPK ? 'V' : ''"></td>
                         <td class="d-none d-lg-table-cell text-center" [innerText]="o.nullable ? 'V' : ''"></td>
                         <td class="d-none d-lg-table-cell text-center" [innerText]="o.type +', ' + o.length"></td>
-                        <td class="text-center" [innerHtml]="highlight(o.alias)"></td>
+                        <td class="text-center" [innerHtml]="highlight(o.alias | emptyIfNull)"></td>
                         <td>
-                            <div [innerText]="o.remark"></div>
+                            <div [innerText]="o.remark | emptyIfNull"></div>
                             <div *ngIf="o.codeMap.length > 0" #codemap>
                                 <button type="button" class="codemap" (click)="codemapButton_click($event.target)">代碼表</button>
                                 <div class="codemap-popover" style="display: none;">

@@ -1,10 +1,10 @@
 {
-  "name": "frbdm.portal.web",
+  "name": "frbdm.web.portal",
   "version": "1.0.0",
   "description": "frbdm web portal.",
   "private": true,
   "scripts": {
-    "build": "ng build",
+    "build": "ng build --prod",
     "start": "ng serve --host 10.37.129.2 --port 8080"
   },
   "repository": {

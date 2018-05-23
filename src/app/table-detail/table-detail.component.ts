@@ -24,6 +24,7 @@ export class TableDetailComponent implements OnInit {
         private api: ApiService) { }
 
     ngOnInit() {
+        document.title = '資料表明細 - FRBDM';
         const q = this.route.snapshot.params;
         this.dbId = q['dbId'];
         this.tableId = q['tableId'];
@@ -33,7 +34,6 @@ export class TableDetailComponent implements OnInit {
 
             setTimeout(()=>{
                 for (const e of this.codemaps.toArray()) {
-                    console.log(e);
                     const $e = $(e.nativeElement);
                     const $btn = $e.find('button.codemap');
                     const $table = $e.find('div.codemap-popover');
