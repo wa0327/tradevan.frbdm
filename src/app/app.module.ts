@@ -22,17 +22,17 @@ const routes: Routes = [
     { path: 'table-detail/:dbId/:tableId/:term', component: TableDetailComponent }
 ];
 
-const httpInterceptorProviders = [{
-    provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true
-}];
-
 @NgModule({
     declarations: [
         EmptyIfNullPipe,
         AppComponent,
         TableSearchComponent,
-        TableDetailComponent],
-    providers: [httpInterceptorProviders, ApiService],
+        TableDetailComponent
+    ],
+    providers: [
+        ApiService,
+        { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true }
+    ],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
