@@ -6,15 +6,9 @@ import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class ApiService {
-    private readonly baseUrl: string;
+    private readonly baseUrl = environment.apiBaseUrl;
 
-    constructor(private http: HttpClient) {
-        if (environment.production) {
-            this.baseUrl = '/api';
-        } else {
-            this.baseUrl = 'http://tradevan:8080/api';
-        }
-    }
+    constructor(private http: HttpClient) { }
 
     getDatabases() {
         const url = `${this.baseUrl}/databases`;
