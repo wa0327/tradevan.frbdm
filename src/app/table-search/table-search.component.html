@@ -1,9 +1,9 @@
-<div class="container-fluid mt-3">
+<div class="container mt-3">
     <!-- 查詢表單 -->
     <form name="form1">
         <div class="form-group row">
-            <label for="db" class="col-md-2 col-form-label">資料庫</label>
-            <div class="col-md-10">
+            <label for="db" class="col-sm-2 col-form-label">資料庫</label>
+            <div class="col-sm-10">
                 <select id="db" name="db" class="form-control" [(ngModel)]="db">
                     <option [ngValue]="null">查詢全部資料庫</option>
                     <option *ngFor="let o of databases" [ngValue]="o">
@@ -13,14 +13,13 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="term" class="col-md-2 col-form-label">查詢名稱</label>
-            <div class="col-md-10">
+            <label for="term" class="col-sm-2 col-form-label">查詢名稱</label>
+            <div class="col-sm-10">
                 <input type="text" id="term" name="term" class="form-control" placeholder="例：產品" [(ngModel)]="term" />
             </div>
         </div>
         <div class="form-group row">
-            <label class="col-md-2 col-form-label"></label>
-            <div class="col-md-10">
+            <div class="col-sm-10 col-sm-offset-2">
                 <div class="form-check form-check-inline">
                     <input type="checkbox" id="forTable" name="forTable" class="form-check-input" [(ngModel)]="forTable" />
                     <label for="forTable" class="form-check-label">資料表名稱</label>
@@ -32,16 +31,16 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="dataDate" class="col-md-2 col-form-label">轉入資料年月</label>
-            <div class="col-md-10">
+            <label for="dataDate" class="col-sm-2 col-form-label">轉入資料年月</label>
+            <div class="col-sm-10">
                 <input name="dataDate" type="text" maxlength="5" id="dataDate" class="form-control" placeholder="例：10701" [(ngModel)]="dataDate"
                 />
             </div>
         </div>
         <div class="row">
-            <div class="col-md-10 offset-2">
-                <button type="button" class="btn btn-primary" (click)="search()">開始查詢</button>
-                <button type="button" class="btn btn-default" (click)="reset()">清除條件</button>
+            <div class="col-sm-10 col-sm-offset-2">
+                <button type="button" class="btn btn-primary search" (click)="search()">開始查詢</button>
+                <button type="button" class="btn btn-default reset" (click)="reset()">清除條件</button>
             </div>
         </div>
     </form>
@@ -54,7 +53,7 @@
                 筆資料
             </div>
         </div>
-        <div [hidden]="result.total < 1" [@fadeIn]>
+        <div *ngIf="result.total > 0" [@fadeIn]>
             <div class="row">
                 <div *ngFor="let o of result.rows" class="col-lg-3 col-md-4 col-sm-6">
                     <div class="card mt-3">
@@ -64,13 +63,13 @@
                             </h5>
                             <p class="card-text text-truncate mb-2" [innerHtml]="highlight(o.nameE | emptyIfNull)" [title]="o.nameE"></p>
                             <footer class="blockquote-footer text-truncate" [innerText]="o.db.name" [title]="o.db.name"></footer>
-                            <footer class="blockquote-footer" [innerText]="o.dataDate + '轉入'" [hidden]="!o.dataDate"></footer>
+                            <footer class="blockquote-footer" [innerText]="o.dataDate + '轉入'" *ngIf="o.dataDate"></footer>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row mt-3" [hidden]="result.pages.length < 2">
-                <div class="mx-auto">
+            <div class="row" *ngIf="result.pages.length > 1">
+                <div class="text-center">
                     <ul class="pagination">
                         <li class="page-item" [ngClass]="{disabled: result.page == 0}">
                             <a class="page-link" href="#" (click)="page(result.page - 1)">前一頁</a>

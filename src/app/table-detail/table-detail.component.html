@@ -1,28 +1,28 @@
 <div class="container mt-3" *ngIf="dt">
     <div class="row">
-        <div class="form-group col-lg-4 col-md-6">
+        <div class="form-group col-md-4 col-sm-6">
             <label class="col-form-label">來源</label>
             <pre class="form-control" [innerText]="dt.db.src"></pre>
         </div>
-        <div class="form-group col-lg-4 col-md-6">
+        <div class="form-group col-md-4 col-sm-6">
             <label class="col-form-label">管理單位</label>
             <pre class="form-control" [innerText]="dt.db.dept"></pre>
         </div>
-        <div class="form-group col-lg-4 col-md-6">
+        <div class="form-group col-md-4 col-sm-6">
             <label class="col-form-label">系統管理者</label>
             <pre class="form-control" [innerText]="dt.db.admin"></pre>
         </div>
-        <div class="form-group col-lg-4 col-md-6">
+        <div class="form-group col-md-4 col-sm-6">
             <label class="col-form-label">系統負責人</label>
             <pre class="form-control" [innerText]="dt.db.principal"></pre>
         </div>
-        <div class="form-group col-lg-4 col-md-6">
+        <div class="form-group col-md-4 col-sm-6">
             <label class="col-form-label">系統轉入年月</label>
             <pre class="form-control" [innerText]="dt.dataDate | emptyIfNull"></pre>
         </div>
     </div>
     <div class="row">
-        <div class="form-group col-12">
+        <div class="form-group col-xs-12">
             <label class="col-form-label">資料庫名稱</label>
             <pre class="form-control" [innerText]="dt.db.name"></pre>
         </div>
@@ -34,11 +34,11 @@
             <label class="col-form-label">資料表英文名</label>
             <pre class="form-control" [innerHtml]="highlight(dt.nameE | emptyIfNull)"></pre>
         </div>
-        <div class="form-group col-12">
+        <div class="form-group col-xs-12">
             <label class="col-form-label">備註</label>
             <pre class="form-control" [innerText]="dt.remark | emptyIfNull"></pre>
         </div>
-        <div class="form-group col-12">
+        <div class="form-group col-xs-12">
             <label class="col-form-label">重要欄位說明</label>
             <pre class="form-control" [innerText]="dt.important | emptyIfNull"></pre>
         </div>
@@ -73,12 +73,8 @@
                         <td>
                             <div [innerText]="o.remark | emptyIfNull"></div>
                             <div *ngIf="o.codeMap.length > 0" #codemap>
-                                <button type="button" class="codemap" (click)="codemapButton_click($event.target)">代碼表</button>
-                                <div class="codemap-popover" style="display: none;">
-                                    <div>
-                                        代碼表
-                                        <button type="button" class="close" ng-click="close()">&times;</button>
-                                    </div>
+                                <button type="button" class="codemap-btn" (click)="codemapButton_click($event.target)">代碼表</button>
+                                <div class="codemap-content text-center" style="display: none;">
                                     <table class="table mb-0">
                                         <thead class="thead-light text-center">
                                             <tr>
@@ -93,6 +89,7 @@
                                             </tr>
                                         </tbody>
                                     </table>
+                                    <button type="button" class="btn btn-primary">關閉</button>
                                 </div>
                             </div>
                         </td>

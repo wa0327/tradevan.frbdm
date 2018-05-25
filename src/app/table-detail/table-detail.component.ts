@@ -29,24 +29,25 @@ export class TableDetailComponent implements OnInit {
         this.dbId = q['dbId'];
         this.tableId = q['tableId'];
         this.term = q['term'];
-        this.api.getDataTable(this.dbId, this.tableId).subscribe(dt=>{
+        this.api.getDataTable(this.dbId, this.tableId).subscribe(dt => {
             this.dt = dt;
 
-            setTimeout(()=>{
+            setTimeout(() => {
                 for (const e of this.codemaps.toArray()) {
                     const $e = $(e.nativeElement);
-                    const $btn = $e.find('button.codemap');
-                    const $table = $e.find('div.codemap-popover');
-                    $table.find('button.close').on('click', ()=>{
-                        $btn.popover('hide');
+                    const $btn = $e.find('.codemap-btn');
+                    const $content = $e.find('.codemap-content');
+                    $content.find('button').on('click', () => {
+                        this.hidePopover($btn);
                     });
-                    $table.detach();
+                    $content.detach();
                     $btn.popover({
-                        template: '<div class="popover" role="tooltip"><div class="arrow"></div><div class="popover-body px-1 py-1"></div></div>',
-                        html: true,
-                        content: $table[0]
+                        template: '<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title text-center"></h3><div class="popover-content"></div></div>',
+                        title: '代碼表',
+                        content: $content[0],
+                        html: true
                     });
-                    $table.show();
+                    $content.show();
                 }
             }, 1);
         });
@@ -61,9 +62,27 @@ export class TableDetailComponent implements OnInit {
     }
 
     codemapButton_click(btn: HTMLElement) {
-        if (this.last_codemapButton && btn != this.last_codemapButton) {
-            $(this.last_codemapButton).popover('hide');
+        if (this.last_codemapButton) {
+            if (btn === this.last_codemapButton) {
+                return;
+            }
+
+            this.hidePopover(this.last_codemapButton);
         }
+
         this.last_codemapButton = btn;
+    }
+
+    private hidePopover(btn: JQuery<HTMLElement> | HTMLElement) {
+        var $btn: JQuery<HTMLElement>;
+
+        if (btn instanceof HTMLElement) {
+            $btn = $(btn);
+        } else {
+            $btn = btn;
+        }
+        
+        $btn.popover('hide');
+        $btn.data('bs.popover').inState['click'] = false; //修正 bs3 bug，因為調用 hide 方法時，它不會將狀態設為 false。
     }
 }

@@ -12,17 +12,30 @@
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.json",
+            "outputPath": "dist",
             "styles": [
-              "node_modules/bootstrap/dist/css/bootstrap.css",
+              "src/bootstrap4/bootstrap.scss",
               "src/styles.less"
             ],
-            "scripts": [
-              "node_modules/jquery/dist/jquery.js",
-              "node_modules/popper.js/dist/umd/popper.js",
-              "node_modules/bootstrap/dist/js/bootstrap.js"
-            ],
-            "tsConfig": "tsconfig.json",
-            "outputPath": "dist"
+            "scripts": [],
+            "assets": [{
+              "glob": "jquery.js",
+              "input": "./node_modules/jquery/dist",
+              "output": "/assets"
+            }, {
+              "glob": "bootstrap.js",
+              "input": "./node_modules/bootstrap/dist/js",
+              "output": "/assets"
+            }, {
+              "glob": "bootstrap.css",
+              "input": "./node_modules/bootstrap/dist/css",
+              "output": "/assets"
+            }, {
+              "glob": "*",
+              "input": "node_modules/bootstrap/dist/fonts",
+              "output": "/assets"
+            }]
           },
           "configurations": {
             "production": {
@@ -30,15 +43,15 @@
                 "replace": "src/environments/environment.ts",
                 "with": "src/environments/environment.prod.ts"
               }],
-              "optimization": true,
+              "optimization": false,
               "outputHashing": "none",
               "sourceMap": true,
               "extractCss": true,
               "namedChunks": false,
               "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true
+              "extractLicenses": false,
+              "vendorChunk": true,
+              "buildOptimizer": false
             }
           }
         },
@@ -46,6 +59,9 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "browserTarget": "app:build"
+          },
+          "configurations": {
+            "production": {}
           }
         }
       }

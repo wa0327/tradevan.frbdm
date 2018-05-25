@@ -16,8 +16,8 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Launch my build",
-            "program": "${workspaceFolder}/build"
+            "name": "Debug my script",
+            "program": "${workspaceFolder}/build-bootstrap4"
         }
     ]
 }
