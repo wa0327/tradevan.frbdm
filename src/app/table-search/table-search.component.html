@@ -59,11 +59,14 @@
                     <div class="card mt-3">
                         <div class="card-header text-truncate" [title]="o.db.src" [innerText]="o.db.src"></div>
                         <div class="card-body">
-                            <h5 class="card-title card-link text-truncate" [title]="o.name" [innerHTML]="highlight(o.name)" (click)="open_detail(o.db.id, o.id)">
-                            </h5>
+                            <h4 class="card-title card-link text-truncate" [title]="o.name" [innerHTML]="highlight(o.name)" (click)="open_detail(o.db.id, o.id)">
+                            </h4>
                             <p class="card-text text-truncate mb-2" [innerHtml]="highlight(o.nameE | emptyIfNull)" [title]="o.nameE"></p>
                             <footer class="blockquote-footer text-truncate" [innerText]="o.db.name" [title]="o.db.name"></footer>
-                            <footer class="blockquote-footer" [innerText]="o.dataDate + '轉入'" *ngIf="o.dataDate"></footer>
+                            <footer class="blockquote-footer">
+                                <span>轉入年月:</span>
+                                <span [innerText]="o.dataDate | emptyIfNull"></span>
+                            </footer>
                         </div>
                     </div>
                 </div>
@@ -72,13 +75,13 @@
                 <div class="text-center">
                     <ul class="pagination">
                         <li class="page-item" [ngClass]="{disabled: result.page == 0}">
-                            <a class="page-link" href="#" (click)="page(result.page - 1)">前一頁</a>
+                            <a class="page-link" (click)="page(result.page - 1)">前一頁</a>
                         </li>
                         <li class="page-item" *ngFor="let p of result.pages" [ngClass]="{active: p == result.page}">
-                            <a class="page-link" href="#" [innerText]="p + 1" (click)="page(p)"></a>
+                            <a class="page-link" [innerText]="p + 1" (click)="page(p)"></a>
                         </li>
                         <li class="page-item" [ngClass]="{disabled: result.page == result.pageMax}">
-                            <a class="page-link" href="#" (click)="page(result.page + 1)">下一頁</a>
+                            <a class="page-link" (click)="page(result.page + 1)">下一頁</a>
                         </li>
                     </ul>
                 </div>
