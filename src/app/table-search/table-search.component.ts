@@ -1,13 +1,12 @@
-import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Component, Input, OnInit, Query } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-
-import { ApiService, DatabaseItem, TableSearchArgs, TableSearchResult } from '../api.service';
-import { TranslationWidth } from '@angular/common';
+import { environment } from '../../environments/environment';
+import { WebapiService } from '../../webapi/webapi.service';
+import { DatabaseItem, TableSearchArgs } from '../../webapi/entities';
 
 @Component({
     selector: 'app-table-search',
@@ -39,7 +38,7 @@ export class TableSearchComponent implements OnInit {
 
     constructor(
         private sanitizer: DomSanitizer,
-        private api: ApiService) { }
+        private api: WebapiService) { }
 
     ngOnInit() {
         document.title = '譯碼簿查詢 - FRBDM';

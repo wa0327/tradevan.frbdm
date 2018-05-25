@@ -1,31 +1,3 @@
-import { environment } from '../environments/environment';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-
-@Injectable()
-export class ApiService {
-    private readonly baseUrl = environment.apiBaseUrl;
-
-    constructor(private http: HttpClient) { }
-
-    getDatabases() {
-        const url = `${this.baseUrl}/databases`;
-        return this.http.get<DatabaseItem[]>(url);
-    }
-
-    searchDataTables(args: TableSearchArgs) {
-        const url = `${this.baseUrl}/datatables?${$.param(args)}`
-        return this.http.get<TableSearchResult>(url);
-    }
-
-    getDataTable(dbId: string, tableId: string) {
-        const url = `${this.baseUrl}/databases/${dbId}/datatables/${tableId}`;
-        return this.http.get<TableDetailItem>(url);
-    }
-}
-
 export class DatabaseItem {
     id: string;
     src: string;
@@ -46,11 +18,7 @@ export class TableSearchResult {
     total: number;
     rows: {
         id: string;
-        db: {
-            id: string;
-            src: string;
-            name: string;
-        };
+        db: DatabaseItem;
         name: string;
         nameE?: string;
         dataDate?: string;

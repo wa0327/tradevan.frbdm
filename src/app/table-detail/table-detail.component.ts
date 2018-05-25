@@ -1,7 +1,8 @@
 import { Component, Input, OnInit, ViewChildren, QueryList, ElementRef } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ApiService, TableDetailItem } from '../api.service';
+import { WebapiService } from '../../webapi/webapi.service';
+import { TableDetailItem } from '../../webapi/entities';
 
 @Component({
     selector: 'app-table-detail',
@@ -21,7 +22,7 @@ export class TableDetailComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private sanitizer: DomSanitizer,
-        private api: ApiService) { }
+        private api: WebapiService) { }
 
     ngOnInit() {
         document.title = '資料表明細 - FRBDM';
@@ -81,7 +82,7 @@ export class TableDetailComponent implements OnInit {
         } else {
             $btn = btn;
         }
-        
+
         $btn.popover('hide');
         $btn.data('bs.popover').inState['click'] = false; //修正 bs3 bug，因為調用 hide 方法時，它不會將狀態設為 false。
     }
