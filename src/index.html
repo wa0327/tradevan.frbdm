@@ -6,11 +6,31 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <style type="text/css">
+        .first-loading {
+            position: absolute;
+            top: 25%;
+            left: 0;
+            right: 0;
+            text-align: center;
+
+            font-family: '微軟正黑體', '蘋方體';
+            font-size: 2em;
+            background-color: #e00;
+            color: #eee;
+            border-radius: 5px;
+            margin: 0 15%;
+            height: 2.6em;
+            padding: 0.6em 0;
+        }
+    </style>
     <link rel="stylesheet" href="/assets/bootstrap.css">
 </head>
 
 <body>
-    <app-root></app-root>
+    <app-root>
+        <span class="first-loading">載入中，請稍候...</span>
+    </app-root>
     <script type="text/javascript" src="/assets/jquery.js"></script>
     <script type="text/javascript" src="/assets/bootstrap.js"></script>
 </body>

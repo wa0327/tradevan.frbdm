@@ -5,7 +5,7 @@ import { NgModule, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { AnimationDriver } from '@angular/animations/browser';
-import { Provider } from '@angular/compiler/src/core';
+import { Provider } from '@angular/core/src/di';
 import { BlockUIModule } from 'ng-block-ui';
 import { BlockUIHttpModule } from 'ng-block-ui/http';
 import { WebapiModule } from '../webapi/webapi.module';
