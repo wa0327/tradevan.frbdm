@@ -3,8 +3,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common
 import { Provider } from '@angular/core/src/di';
 import { environment as env } from '../environments/environment';
 import { WebapiInterceptor } from './webapi.interceptor';
-import { IWebapiInterface } from './webapi.interface';
 import { WebapiService } from './webapi.service';
+import { ImplWebapiService } from './impl-webapi.service';
 import { MockWebapiService } from './mock-webapi.service';
 
 @NgModule({
@@ -17,7 +17,7 @@ import { MockWebapiService } from './mock-webapi.service';
                 if (env.useMockData) {
                     return new MockWebapiService();
                 } else {
-                    return new WebapiService(http);
+                    return new ImplWebapiService(http);
                 }
             },
             deps: [HttpClient]

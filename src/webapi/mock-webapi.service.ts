@@ -1,10 +1,10 @@
 import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { IWebapiInterface } from './webapi.interface';
+import { WebapiService } from './webapi.service';
 import { DatabaseItem, TableSearchArgs, TableSearchResult, TableDetailItem } from './entities';
 
 @Injectable()
-export class MockWebapiService implements IWebapiInterface {
+export class MockWebapiService implements WebapiService {
     getDatabases(): Observable<DatabaseItem[]> {
         return of([{
             'id': 'DB001',
