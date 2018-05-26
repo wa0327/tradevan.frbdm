@@ -1,10 +1,8 @@
 <div class="container">
+    <img src="/assets/logo.png" title="衛生福利部食品藥物管理署">
+    <img src="/assets/fda.png" title="衛生福利部食品藥物管理署">
+    <h3 class="title">譯碼簿查詢</h3>
     <!-- 查詢表單 -->
-    <div class="row">
-        <img src="/assets/logo.png" title="衛生福利部食品藥物管理署">
-        <img src="/assets/fda.png" title="衛生福利部食品藥物管理署">
-        <h3 class="title">譯碼簿查詢</h3>
-    </div>
     <form name="form1">
         <div class="form-group row">
             <label for="db" class="col-sm-3 col-form-label">資料庫</label>
@@ -50,16 +48,15 @@
         </div>
     </form>
     <!--查詢結果-->
-    <div class="result mt-3" *ngIf="result">
+    <div *ngIf="result?.total == 0" class="mt-5 text-center alert alert-info">
+        查無任何資料。
+    </div>    
+    <div *ngIf="result?.total > 0" class="mt-3">
+        共
+        <span class="font-weight-bold" [innerText]="result.total | number"></span>
+        筆資料
         <div class="row">
-            <div class="col-sm-12">
-                共
-                <span class="font-weight-bold" [innerText]="result.total | number"></span>
-                筆資料
-            </div>
-        </div>
-        <div class="row" *ngIf="result.total > 0" [@fadeIn]>
-            <div *ngFor="let o of result.rows" class="col-lg-3 col-md-4 col-sm-6">
+            <div *ngFor="let o of result.rows" class="col-lg-3 col-md-4 col-sm-6" [@fadeIn]>
                 <div class="card mt-3">
                     <div class="card-header text-truncate" [title]="o.db.src" [innerText]="o.db.src"></div>
                     <div class="card-body">
@@ -76,20 +73,18 @@
                 </div>
             </div>
         </div>
-        <div class="row" *ngIf="result.pages.length > 1">
-            <div class="text-center">
-                <ul class="pagination">
-                    <li class="page-item" [ngClass]="{disabled: result.page == 0}">
-                        <a class="page-link" (click)="page(result.page - 1)">前一頁</a>
-                    </li>
-                    <li class="page-item" *ngFor="let p of result.pages" [ngClass]="{active: p == result.page}">
-                        <a class="page-link" [innerText]="p + 1" (click)="page(p)"></a>
-                    </li>
-                    <li class="page-item" [ngClass]="{disabled: result.page == result.pageMax}">
-                        <a class="page-link" (click)="page(result.page + 1)">下一頁</a>
-                    </li>
-                </ul>
-            </div>
+        <div class="text-center" *ngIf="result.pages.length > 1">
+            <ul class="pagination">
+                <li class="page-item" [ngClass]="{disabled: result.page == 0}">
+                    <a class="page-link" (click)="page(result.page - 1)">前一頁</a>
+                </li>
+                <li class="page-item" *ngFor="let p of result.pages" [ngClass]="{active: p == result.page}">
+                    <a class="page-link" [innerText]="p + 1" (click)="page(p)"></a>
+                </li>
+                <li class="page-item" [ngClass]="{disabled: result.page == result.pageMax}">
+                    <a class="page-link" (click)="page(result.page + 1)">下一頁</a>
+                </li>
+            </ul>
         </div>
     </div>
 </div>

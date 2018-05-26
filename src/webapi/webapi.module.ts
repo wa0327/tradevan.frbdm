@@ -17,8 +17,11 @@ if (navigator.userAgent.indexOf('MSIE 9.0') !== -1) {
         providers.push({ provide: WebapiService, useClass: MockWebapiService });
     }
 } else {
-    // providers.push(WebapiService);
-    providers.push({ provide: WebapiService, useClass: MockWebapiService });
+    if (env.useMockData) {
+        providers.push({ provide: WebapiService, useClass: MockWebapiService });
+    } else {
+        providers.push(WebapiService);
+    }
 }
 
 @NgModule({

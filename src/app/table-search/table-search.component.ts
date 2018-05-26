@@ -4,7 +4,7 @@ import { Component, Input, OnInit, Query } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { environment } from '../../environments/environment';
+import { environment as env } from '../../environments/environment';
 import { WebapiService } from '../../webapi/webapi.service';
 import { DatabaseItem, TableSearchArgs } from '../../webapi/entities';
 
@@ -45,9 +45,13 @@ export class TableSearchComponent implements OnInit {
         this.reset();
         this.api.getDatabases().subscribe(databases => {
             this.databases = databases;
-            if (!environment.production) {
+            if (!env.production) {
                 this.db = databases[0];
-                this.search();
+                this.term = '產品';
+
+                if (env.useMockData) {
+                    this.search();
+                }
             }
         });
     }
@@ -82,7 +86,9 @@ export class TableSearchComponent implements OnInit {
     }
 
     page(pageIndex: number) {
-        if (this.result.page == pageIndex) {
+        if (this.result.page == pageIndex
+            || pageIndex < 0
+            || pageIndex > this.result.pageMax) {
             return;
         }
 
@@ -135,7 +141,7 @@ export class TableSearchComponent implements OnInit {
     }
 
     private getPage(args: TableSearchArgs, pageIndex: number): Observable<PageData> {
-        const pageSize = 10;
+        const pageSize = 12;
         args.page_size = pageSize;
         args.page_index = pageIndex;
 
