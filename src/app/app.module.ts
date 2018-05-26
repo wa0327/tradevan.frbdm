@@ -4,7 +4,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { NgModule, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
-import { AnimationDriver } from '@angular/animations/browser';
+import { AnimationDriver, ɵWebAnimationsDriver, ɵCssKeyframesDriver, ɵsupportsWebAnimations } from '@angular/animations/browser';
 import { Provider } from '@angular/core/src/di';
 import { BlockUIModule } from 'ng-block-ui';
 import { BlockUIHttpModule } from 'ng-block-ui/http';
@@ -20,11 +20,6 @@ const routes: Routes = [
     { path: 'table-detail/:dbId/:tableId', component: TableDetailComponent },
     { path: 'table-detail/:dbId/:tableId/:term', component: TableDetailComponent }
 ];
-
-const providers: Provider[] = [];
-if (navigator.userAgent.indexOf('MSIE 9.0') !== -1) {
-    providers.push({ provide: AnimationDriver, useValue: AnimationDriver.NOOP });
-}
 
 @NgModule({
     declarations: [
@@ -42,7 +37,18 @@ if (navigator.userAgent.indexOf('MSIE 9.0') !== -1) {
         BlockUIModule.forRoot(),
         BlockUIHttpModule.forRoot()
     ],
-    providers: providers,
+    providers: [
+        {
+            provide: AnimationDriver,
+            useFactory: () => {
+                if (navigator.userAgent.indexOf('MSIE 9.0;') !== -1) {
+                    return AnimationDriver.NOOP;
+                } else {
+                    return ɵsupportsWebAnimations() ? new ɵWebAnimationsDriver() : new ɵCssKeyframesDriver();
+                }
+            }
+        }
+    ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     bootstrap: [AppComponent]
 })

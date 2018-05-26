@@ -64,7 +64,9 @@
             "browserTarget": "app:build"
           },
           "configurations": {
-            "production": {}
+            "production": {
+              "browserTarget": "app:build:production"
+            }
           }
         }
       }
