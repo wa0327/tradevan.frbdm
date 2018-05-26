@@ -35,10 +35,6 @@
               "glob": "*",
               "input": "node_modules/bootstrap/dist/fonts",
               "output": "/assets"
-            }, {
-              "glob": "*",
-              "input": "src/test",
-              "output": "/test"
             }]
           },
           "configurations": {
