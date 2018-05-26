@@ -1,18 +1,24 @@
+.title {
+    color: #369;
+    background-color: #ffda31;
+}
+
 button.reset {
     margin-left: 15px;
 }
 
-.card {
-    .card-header {
-        height: 40px;
+@media(min-width: 768px) {
+    .col-form-label {
+        text-align: right;
     }
+}
+
+.card {
+    word-wrap: normal; //讓所有文字不自動折行
 
     .card-body {
-        padding: 0.75em 1.25em;
-
         .card-title {
-            margin-top: 5px;
-            height: 20px;
+            margin: 5px 0;
         }
 
         .card-link {
@@ -21,11 +27,14 @@ button.reset {
         }
 
         .card-text {
-            height: 20px;
+            line-height: 1em;
+            min-height: 1em;
         }
 
-        .blockquote-footer {
-            height: 20px;
+        blockquote {
+            margin: 0;
+            padding: 0;
+            border-left: none;
         }
     }
 }

@@ -46,7 +46,13 @@ export class TableDetailComponent implements OnInit {
                         template: '<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title text-center"></h3><div class="popover-content"></div></div>',
                         title: '代碼表',
                         content: $content[0],
-                        html: true
+                        html: true,
+                        placement: function () {
+                            if (screen.width < 768)
+                                return 'left';
+                            else
+                                return 'right';
+                        }
                     });
                     $content.show();
                 }
