@@ -47,6 +47,7 @@ export class TableSearchComponent implements OnInit {
             this.databases = databases;
             if (!environment.production) {
                 this.db = databases[0];
+                this.search();
             }
         });
     }

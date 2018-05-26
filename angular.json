@@ -21,20 +21,24 @@
             "scripts": [],
             "assets": [{
               "glob": "jquery.js",
-              "input": "./node_modules/jquery/dist",
+              "input": "node_modules/jquery/dist",
               "output": "/assets"
             }, {
               "glob": "bootstrap.js",
-              "input": "./node_modules/bootstrap/dist/js",
+              "input": "node_modules/bootstrap/dist/js",
               "output": "/assets"
             }, {
               "glob": "bootstrap.css",
-              "input": "./node_modules/bootstrap/dist/css",
+              "input": "node_modules/bootstrap/dist/css",
               "output": "/assets"
             }, {
               "glob": "*",
               "input": "node_modules/bootstrap/dist/fonts",
               "output": "/assets"
+            }, {
+              "glob": "*",
+              "input": "src/test",
+              "output": "/test"
             }]
           },
           "configurations": {
