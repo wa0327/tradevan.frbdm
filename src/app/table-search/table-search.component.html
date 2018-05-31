@@ -61,12 +61,12 @@
                     <div class="card-header text-truncate" [title]="o.db.src" [innerText]="o.db.src"></div>
                     <div class="card-body">
                         <h3 class="card-title card-link text-truncate" [title]="o.name" [innerHTML]="highlight(o.name)" (click)="open_detail(o.db.id, o.id)"></h3>
-                        <p class="card-text text-truncate mb-2" [innerHtml]="highlight(o.nameE | emptyIfNull)" [title]="o.nameE"></p>
+                        <p class="card-text text-truncate mb-2" [innerHtml]="highlight(o.nameE || '')" [title]="o.nameE"></p>
                         <blockquote>
                             <footer class="text-truncate" [innerText]="o.db.name" [title]="o.db.name"></footer>
                             <footer>
                                 <span>轉入年月:</span>
-                                <span [innerText]="o.dataDate | emptyIfNull"></span>
+                                <span [innerText]="o.dataDate || ''"></span>
                             </footer>
                         </blockquote>
                     </div>

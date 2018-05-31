@@ -4,10 +4,10 @@
   "description": "frbdm web portal.",
   "private": true,
   "scripts": {
-    "build": "ng build --extract-css --extract-licenses false",
-    "build-prod": "ng build --prod",
+    "build": "ng build",
     "start": "ng serve --host 10.37.129.2 --port 8080",
-    "host2": "ng serve --host 192.168.0.153 --port 8080"
+    "build:prod": "ng build --prod",
+    "start:prod": "ng serve --prod --host 10.37.129.2 --port 8080"
   },
   "repository": {
     "type": "svn"

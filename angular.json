@@ -1,4 +1,5 @@
 {
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "projects": {
     "app": {
@@ -18,34 +19,40 @@
               "src/bootstrap4/bootstrap.scss",
               "src/styles.less"
             ],
-            "scripts": [],
             "assets": [
               "src/assets",
               {
                 "glob": "jquery.js",
                 "input": "node_modules/jquery/dist",
                 "output": "/assets"
-              }, {
+              },
+              {
                 "glob": "bootstrap.js",
                 "input": "node_modules/bootstrap/dist/js",
                 "output": "/assets"
-              }, {
+              },
+              {
                 "glob": "bootstrap.css",
                 "input": "node_modules/bootstrap/dist/css",
                 "output": "/assets"
-              }, {
+              },
+              {
                 "glob": "*",
                 "input": "node_modules/bootstrap/dist/fonts",
                 "output": "/assets"
               }
-            ]
+            ],
+            "extractCss": true,
+            "extractLicenses": false
           },
           "configurations": {
             "production": {
-              "fileReplacements": [{
-                "replace": "src/environments/environment.ts",
-                "with": "src/environments/environment.prod.ts"
-              }],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
               "optimization": false,
               "outputHashing": "none",
               "sourceMap": true,

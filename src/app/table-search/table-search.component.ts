@@ -81,7 +81,7 @@ export class TableSearchComponent implements OnInit {
         this.db = null;
         this.term = null;
         this.forTable = true;
-        this.forColumn = false;
+        this.forColumn = true;
         this.dataDate = null;
     }
 
@@ -107,8 +107,9 @@ export class TableSearchComponent implements OnInit {
     }
 
     highlight(text: string) {
-        var term = this.term;
-        if (text && term)
+        var term = this.lastQueryArgs.term;
+        var forTable = this.lastQueryArgs.for_table;
+        if (text && term && forTable)
             return this.sanitizer.bypassSecurityTrustHtml(text.replace(new RegExp(term, 'gi'), '<highlight>$&</highlight>'));
         else
             return this.sanitizer.bypassSecurityTrustHtml(text);

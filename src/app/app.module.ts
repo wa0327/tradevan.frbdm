@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { NgModule, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
@@ -9,7 +8,6 @@ import { Provider } from '@angular/core/src/di';
 import { BlockUIModule } from 'ng-block-ui';
 import { BlockUIHttpModule } from 'ng-block-ui/http';
 import { WebapiModule } from '../webapi/webapi.module';
-import { EmptyIfNullPipe } from './empty-If-null.pipe';
 import { AppComponent } from './app.component';
 import { TableSearchComponent } from './table-search/table-search.component';
 import { TableDetailComponent } from './table-detail/table-detail.component';
@@ -23,7 +21,6 @@ const routes: Routes = [
 
 @NgModule({
     declarations: [
-        EmptyIfNullPipe,
         AppComponent,
         TableSearchComponent,
         TableDetailComponent
