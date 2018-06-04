@@ -15,6 +15,9 @@ button.reset {
 
 .card {
     word-wrap: normal; //讓所有文字不自動折行
+    opacity: 0;
+    transform: translateY(50px);
+    visibility: hidden;
 
     .card-body {
         .card-title {
@@ -36,6 +39,13 @@ button.reset {
             padding: 0;
             border-left: none;
         }
+    }
+
+    &.show {
+        opacity: 1;
+        transform: translateY(0);
+        visibility: visible;
+        transition: opacity 1s cubic-bezier(.2, .8, 0.5, 1), transform 1s cubic-bezier(0.1, 1.2, 0.7, 1);
     }
 }
 

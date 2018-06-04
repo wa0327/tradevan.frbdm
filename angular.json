@@ -53,22 +53,18 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "optimization": false,
-              "outputHashing": "none",
-              "sourceMap": true,
-              "extractCss": true,
-              "namedChunks": false,
               "aot": true,
-              "extractLicenses": false,
-              "vendorChunk": true,
-              "buildOptimizer": false
+              "namedChunks": false,
+              "vendorChunk": true
             }
           }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "app:build"
+            "browserTarget": "app:build",
+            "host": "10.37.129.2",
+            "port": 8080
           },
           "configurations": {
             "production": {

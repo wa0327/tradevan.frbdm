@@ -7,7 +7,7 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Launch ng build",
+            "name": "debug ng build",
             "program": "${workspaceFolder}/node_modules/.bin/ng",
             "args": [
                 "build"
@@ -16,8 +16,15 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Debug my script",
+            "name": "debug script",
             "program": "${workspaceFolder}/build-bootstrap4"
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "debug client",
+            "url": "http://10.37.129.2:8080/",
+            "webRoot": "${workspaceFolder}"
         }
     ]
 }

@@ -1,9 +1,7 @@
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Component, Input, OnInit, Query } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { trigger, state, style, transition, animate } from '@angular/animations';
 import { environment as env } from '../../environments/environment';
 import { WebapiService } from '../../webapi/webapi.service';
 import { DatabaseItem, TableSearchArgs } from '../../webapi/entities';
@@ -11,17 +9,7 @@ import { DatabaseItem, TableSearchArgs } from '../../webapi/entities';
 @Component({
     selector: 'app-table-search',
     templateUrl: 'table-search.component.html',
-    styleUrls: ['table-search.component.less'],
-    animations: [
-        trigger('fadeIn', [
-            state('void', style({ opacity: 0 })),
-            transition(':enter', [
-                animate('500ms ease-out', style({
-                    opacity: 1
-                })),
-            ])
-        ])
-    ]
+    styleUrls: ['table-search.component.less']
 })
 export class TableSearchComponent implements OnInit {
 
@@ -73,6 +61,7 @@ export class TableSearchComponent implements OnInit {
 
         this.getPage(args, 0).subscribe(result => {
             this.result = result;
+            this.animateCards();
         });
         this.lastQueryArgs = args;
     }
@@ -94,6 +83,7 @@ export class TableSearchComponent implements OnInit {
 
         this.getPage(this.lastQueryArgs, pageIndex).subscribe(result => {
             this.result = result;
+            this.animateCards();
         });
     }
 
@@ -165,6 +155,20 @@ export class TableSearchComponent implements OnInit {
                 pages: pageArray
             };
         }));
+    }
+
+    private animateCards() {
+        setTimeout(() => {
+            // $('div.card').addClass('show');
+            const cards = $('div.card').toArray().reverse();
+            const timer = setInterval(() => {
+                const card = cards.pop()
+                card.classList.add('show')
+                if (cards.length == 0) {
+                    clearInterval(timer)
+                }
+            }, 30)
+        });
     }
 }
 

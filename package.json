@@ -5,15 +5,14 @@
   "private": true,
   "scripts": {
     "build": "ng build",
-    "start": "ng serve --host 10.37.129.2 --port 8080",
+    "start": "ng serve",
     "build:prod": "ng build --prod",
-    "start:prod": "ng serve --prod --host 10.37.129.2 --port 8080"
+    "start:prod": "ng serve --prod"
   },
   "repository": {
     "type": "svn"
   },
   "dependencies": {
-    "@angular/animations": "^6.0.0",
     "@angular/common": "^6.0.0",
     "@angular/compiler": "^6.0.0",
     "@angular/core": "^6.0.0",
