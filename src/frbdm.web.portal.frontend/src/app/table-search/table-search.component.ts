@@ -26,7 +26,9 @@ export class TableSearchComponent implements OnInit {
 
     constructor(
         private sanitizer: DomSanitizer,
-        private api: WebapiService) { }
+        private api: WebapiService
+    ) {
+    }
 
     ngOnInit() {
         document.title = '譯碼簿查詢 - FRBDM';
@@ -46,24 +48,21 @@ export class TableSearchComponent implements OnInit {
 
     search() {
         var args = this.getQueryArgs();
-
-        if (args.db == null && args.term == null) {
-            alert('[資料庫]與[查詢名稱]至少要選擇一項。');
-            return;
+        if (args) {
+            this.getPage(args, 0).subscribe(result => {
+                this.result = result;
+                this.animateCards();
+            });
+            this.lastQueryArgs = args;
         }
+    }
 
-        if (args.term) {
-            if (!args.for_table && !args.for_column) {
-                alert('[資料表名稱]與[欄位名稱]至少要選擇一項。');
-                return;
-            }
+    export() {
+        var args = this.getQueryArgs();
+        if (args) {
+            const url = `${env.apiBaseUrl}/datatables/export?${$.param(args)}`;
+            window.open(url, '_blank');
         }
-
-        this.getPage(args, 0).subscribe(result => {
-            this.result = result;
-            this.animateCards();
-        });
-        this.lastQueryArgs = args;
     }
 
     reset() {
@@ -126,6 +125,18 @@ export class TableSearchComponent implements OnInit {
 
         if (this.dataDate) {
             args.data_date = this.dataDate;
+        }
+
+        if (args.db == null && args.term == null) {
+            alert('[資料庫]與[查詢名稱]至少要選擇一項。');
+            return null;
+        }
+
+        if (args.term) {
+            if (!args.for_table && !args.for_column) {
+                alert('[資料表名稱]與[欄位名稱]至少要選擇一項。');
+                return null;
+            }
         }
 
         return args;

@@ -1,6 +1,6 @@
 export const environment = {
     production: false,
-    apiBaseUrl: 'http://tradevan:8080/api',
+    apiBaseUrl: 'http://developer:8080/api',
     useMockData: false
 };
 
