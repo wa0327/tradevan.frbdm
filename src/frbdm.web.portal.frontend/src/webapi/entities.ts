@@ -1,3 +1,10 @@
+export class CurrentLogon {
+    id: number;
+    account: string;
+    name: string;
+    roles: string[];
+}
+
 export class DatabaseItem {
     id: string;
     src: string;
@@ -22,7 +29,7 @@ export class TableSearchResult {
         name: string;
         nameE?: string;
         dataDate?: string;
-    }[]
+    }[];
 }
 
 export class TableDetailItem {
@@ -53,4 +60,25 @@ export class TableDetailItem {
             name: string;
         }[]
     }[];
+}
+
+export class UserSearchResult {
+    total: number;
+    rows: {
+        id: number;
+        account: string;
+        name: string;
+        department: string;
+        groupName: string;
+        enabled: boolean;
+    }[];
+}
+
+export class UserItem {
+    id?: number;
+    account: string;
+    name: string;
+    department: string;
+    groupId: string;
+    enabled: boolean;
 }

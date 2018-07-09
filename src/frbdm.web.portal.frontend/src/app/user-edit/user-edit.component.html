@@ -1,0 +1,49 @@
+<h3 class="title" [innerText]="title"></h3>
+<!-- 表單 -->
+<form name="form1" *ngIf="user != null">
+    <div class="form-group row">
+        <label for="account" class="col-sm-3 col-form-label">AD帳號</label>
+        <div class="col-sm-9">
+            <input type="text" id="account" name="account" class="form-control" [(ngModel)]="user.account" [disabled]="user.id != null" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="name" class="col-sm-3 col-form-label">使用者名稱</label>
+        <div class="col-sm-9">
+            <input type="text" id="name" name="name" class="form-control" [(ngModel)]="user.name" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="department" class="col-sm-3 col-form-label">單位名稱</label>
+        <div class="col-sm-9">
+            <input type="text" id="department" name="department" class="form-control" [(ngModel)]="user.department" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="groupId" class="col-sm-3 col-form-label">使用者角色</label>
+        <div class="col-sm-9">
+            <select id="groupId" name="groupId" class="form-control" [(ngModel)]="user.groupId">
+                <option value="6DCDAC7D-9926-4DAD-880D-95234FCA5C2F">
+                    系統管理員
+                </option>
+                <option value="A8309AC1-EA48-43EE-A6BE-D97CFD7065AA">
+                    一般使用者
+                </option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-9 col-sm-offset-3">
+            <div class="form-check form-check-inline">
+                <input type="checkbox" id="enabled" name="enabled" class="form-check-input" [(ngModel)]="user.enabled" />
+                <label for="enabled" class="form-check-label">已啟用</label>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-9 col-sm-offset-3 function-area">
+            <button type="button" class="btn btn-primary" (click)="save()">儲存</button>
+            <button type="button" class="btn btn-default" (click)="cancel()">取消</button>
+        </div>
+    </div>
+</form>

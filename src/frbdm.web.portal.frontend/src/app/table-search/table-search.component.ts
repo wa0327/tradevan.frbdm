@@ -87,7 +87,7 @@ export class TableSearchComponent implements OnInit {
     }
 
     open_detail(dbId: string, tableId: string) {
-        var url = `/#/table-detail/${dbId}/${tableId}`;
+        var url = `/#/tables/${dbId}/${tableId}`;
         if (this.lastQueryArgs.term) {
             url = `${url}/${this.lastQueryArgs.term}`;
         }
@@ -170,15 +170,16 @@ export class TableSearchComponent implements OnInit {
 
     private animateCards() {
         setTimeout(() => {
-            // $('div.card').addClass('show');
             const cards = $('div.card').toArray().reverse();
-            const timer = setInterval(() => {
-                const card = cards.pop()
-                card.classList.add('show')
-                if (cards.length == 0) {
-                    clearInterval(timer)
-                }
-            }, 30)
+            if (cards.length > 0) {
+                const timer = setInterval(() => {
+                    const card = cards.pop()
+                    card.classList.add('show')
+                    if (cards.length == 0) {
+                        clearInterval(timer)
+                    }
+                }, 30);
+            }
         });
     }
 }

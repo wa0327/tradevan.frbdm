@@ -1,10 +1,14 @@
 import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { WebapiService } from './webapi.service';
-import { DatabaseItem, TableSearchArgs, TableSearchResult, TableDetailItem } from './entities';
+import { CurrentLogon, DatabaseItem, TableSearchArgs, TableSearchResult, TableDetailItem, UserSearchResult, UserItem } from './entities';
 
 @Injectable()
 export class MockWebapiService implements WebapiService {
+    getLogon(): Observable<CurrentLogon> {
+        return null;
+     }
+
     getDatabases(): Observable<DatabaseItem[]> {
         return of([{
             'id': 'DB001',
@@ -483,5 +487,17 @@ export class MockWebapiService implements WebapiService {
                 'codeMap': []
             }]
         });
+    }
+
+    searchUsers(account: string, name: string): Observable<UserSearchResult> {
+        return null;
+    }
+
+    getUser(userId: number): Observable<UserItem> {
+        return null;
+    }
+
+    saveUser(user: UserItem): Observable<void> {
+        return null;
     }
 }

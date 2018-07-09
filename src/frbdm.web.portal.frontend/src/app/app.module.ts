@@ -8,27 +8,36 @@ import { WebapiModule } from '../webapi/webapi.module';
 import { AppComponent } from './app.component';
 import { TableSearchComponent } from './table-search/table-search.component';
 import { TableDetailComponent } from './table-detail/table-detail.component';
+import { UserSearchComponent } from './user-search/user-search.component';
+import { UserEditComponent } from './user-edit/user-edit.component';
+import { AuthorizationService } from './authorization.service';
 
 const routes: Routes = [
-    { path: '', redirectTo: '/table-search', pathMatch: 'full' },
-    { path: 'table-search', component: TableSearchComponent },
-    { path: 'table-detail/:dbId/:tableId', component: TableDetailComponent },
-    { path: 'table-detail/:dbId/:tableId/:term', component: TableDetailComponent }
+    { path: '', redirectTo: '/tables', pathMatch: 'full' },
+    { path: 'tables', component: TableSearchComponent },
+    { path: 'tables/:dbId/:tableId', component: TableDetailComponent },
+    { path: 'tables/:dbId/:tableId/:term', component: TableDetailComponent },
+    { path: 'users', component: UserSearchComponent },
+    { path: 'users/:userId', component: UserEditComponent },
+    { path: 'add-user', component: UserEditComponent }
 ];
 
 @NgModule({
     declarations: [
         AppComponent,
         TableSearchComponent,
-        TableDetailComponent
+        TableDetailComponent,
+        UserSearchComponent,
+        UserEditComponent
     ],
+    providers: [AuthorizationService],
     imports: [
         BrowserModule,
         FormsModule,
         RouterModule.forRoot(routes, { useHash: true }),
         WebapiModule,
-        BlockUIModule.forRoot(),
-        BlockUIHttpModule.forRoot()
+        // BlockUIModule.forRoot(),
+        // BlockUIHttpModule.forRoot()
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     bootstrap: [AppComponent]

@@ -1,6 +1,5 @@
-import { NgModule, InjectionToken, ClassProvider, Type } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
-import { Provider } from '@angular/core/src/di';
 import { environment as env } from '../environments/environment';
 import { WebapiInterceptor } from './webapi.interceptor';
 import { WebapiService } from './webapi.service';

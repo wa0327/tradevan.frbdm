@@ -1,91 +1,87 @@
-<div class="container">
-    <img src="/assets/logo.png" title="衛生福利部食品藥物管理署">
-    <img src="/assets/fda.png" title="衛生福利部食品藥物管理署">
-    <h3 class="title">譯碼簿查詢</h3>
-    <!-- 查詢表單 -->
-    <form name="form1">
-        <div class="form-group row">
-            <label for="db" class="col-sm-3 col-form-label">資料庫</label>
-            <div class="col-sm-9">
-                <select id="db" name="db" class="form-control" [(ngModel)]="db">
-                    <option [ngValue]="null">查詢全部資料庫</option>
-                    <option *ngFor="let o of databases" [ngValue]="o">
-                        【{{o.src}}】{{o.name}}
-                    </option>
-                </select>
+<h3 class="title">譯碼簿查詢</h3>
+<!-- 查詢表單 -->
+<form name="form1">
+    <div class="form-group row">
+        <label for="db" class="col-sm-3 col-form-label">資料庫</label>
+        <div class="col-sm-9">
+            <select id="db" name="db" class="form-control" [(ngModel)]="db">
+                <option [ngValue]="null">查詢全部資料庫</option>
+                <option *ngFor="let o of databases" [ngValue]="o">
+                    【{{o.src}}】{{o.name}}
+                </option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="term" class="col-sm-3 col-form-label">查詢名稱</label>
+        <div class="col-sm-9">
+            <input type="text" id="term" name="term" class="form-control" placeholder="例：產品" [(ngModel)]="term" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-9 col-sm-offset-3">
+            <div class="form-check form-check-inline">
+                <input type="checkbox" id="forTable" name="forTable" class="form-check-input" [(ngModel)]="forTable" />
+                <label for="forTable" class="form-check-label">資料表名稱</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input type="checkbox" id="forColumn" name="forColumn" class="form-check-input" [(ngModel)]="forColumn" />
+                <label for="forColumn" class="form-check-label">欄位名稱</label>
             </div>
         </div>
-        <div class="form-group row">
-            <label for="term" class="col-sm-3 col-form-label">查詢名稱</label>
-            <div class="col-sm-9">
-                <input type="text" id="term" name="term" class="form-control" placeholder="例：產品" [(ngModel)]="term" />
-            </div>
+    </div>
+    <div class="form-group row">
+        <label for="dataDate" class="col-sm-3 col-form-label">轉入資料年月</label>
+        <div class="col-sm-9">
+            <input name="dataDate" type="text" maxlength="5" id="dataDate" class="form-control" placeholder="例：10701" [(ngModel)]="dataDate"
+            />
         </div>
-        <div class="form-group row">
-            <div class="col-sm-9 col-sm-offset-3">
-                <div class="form-check form-check-inline">
-                    <input type="checkbox" id="forTable" name="forTable" class="form-check-input" [(ngModel)]="forTable" />
-                    <label for="forTable" class="form-check-label">資料表名稱</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input type="checkbox" id="forColumn" name="forColumn" class="form-check-input" [(ngModel)]="forColumn" />
-                    <label for="forColumn" class="form-check-label">欄位名稱</label>
-                </div>
-            </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-9 col-sm-offset-3 function-area">
+            <button type="button" class="btn btn-primary" (click)="search()">開始查詢</button>
+            <button type="button" class="btn btn-default" (click)="reset()">清除條件</button>
+            <button type="button" class="btn btn-primary" (click)="export()">匯出</button>
         </div>
-        <div class="form-group row">
-            <label for="dataDate" class="col-sm-3 col-form-label">轉入資料年月</label>
-            <div class="col-sm-9">
-                <input name="dataDate" type="text" maxlength="5" id="dataDate" class="form-control" placeholder="例：10701" [(ngModel)]="dataDate"
-                />
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-9 col-sm-offset-3 buttons">
-                <button type="button" class="btn btn-primary search" (click)="search()">開始查詢</button>
-                <button type="button" class="btn btn-default reset" (click)="reset()">清除條件</button>
-                <button type="button" class="btn btn-primary" (click)="export()">匯出</button>
-            </div>
-        </div>
-    </form>
-    <!--查詢結果-->
-    <div *ngIf="result?.total == 0" class="mt-5 text-center alert alert-info">
-        查無任何資料。
-    </div>    
-    <div *ngIf="result?.total > 0" class="mt-3">
-        共
-        <span class="font-weight-bold" [innerText]="result.total | number"></span>
-        筆資料
-        <div class="row">
-            <div *ngFor="let o of result.rows" class="col-lg-3 col-md-4 col-sm-6">
-                <div class="card mt-3">
-                    <div class="card-header text-truncate" [title]="o.db.src" [innerText]="o.db.src"></div>
-                    <div class="card-body">
-                        <h3 class="card-title card-link text-truncate" [title]="o.name" [innerHTML]="highlight(o.name)" (click)="open_detail(o.db.id, o.id)"></h3>
-                        <p class="card-text text-truncate mb-2" [innerHtml]="highlight(o.nameE || '')" [title]="o.nameE"></p>
-                        <blockquote>
-                            <footer class="text-truncate" [innerText]="o.db.name" [title]="o.db.name"></footer>
-                            <footer>
-                                <span>轉入年月:</span>
-                                <span [innerText]="o.dataDate || ''"></span>
-                            </footer>
-                        </blockquote>
-                    </div>
+    </div>
+</form>
+<!--查詢結果-->
+<div *ngIf="result?.total == 0" class="mt-5 text-center alert alert-info">
+    查無任何資料。
+</div>
+<div *ngIf="result?.total > 0" class="mt-3">
+    共
+    <span class="font-weight-bold" [innerText]="result.total | number"></span>
+    筆資料
+    <div class="row">
+        <div *ngFor="let o of result.rows" class="col-lg-3 col-md-4 col-sm-6">
+            <div class="card mt-3">
+                <div class="card-header text-truncate" [title]="o.db.src" [innerText]="o.db.src"></div>
+                <div class="card-body">
+                    <h3 class="card-title card-link text-truncate" [title]="o.name" [innerHTML]="highlight(o.name)" (click)="open_detail(o.db.id, o.id)"></h3>
+                    <p class="card-text text-truncate mb-2" [innerHtml]="highlight(o.nameE || '')" [title]="o.nameE"></p>
+                    <blockquote>
+                        <footer class="text-truncate" [innerText]="o.db.name" [title]="o.db.name"></footer>
+                        <footer>
+                            <span>轉入年月:</span>
+                            <span [innerText]="o.dataDate || ''"></span>
+                        </footer>
+                    </blockquote>
                 </div>
             </div>
         </div>
-        <div class="text-center" *ngIf="result.pages.length > 1">
-            <ul class="pagination">
-                <li class="page-item" [ngClass]="{disabled: result.page == 0}">
-                    <a class="page-link" (click)="page(result.page - 1)">前一頁</a>
-                </li>
-                <li class="page-item" *ngFor="let p of result.pages" [ngClass]="{active: p == result.page}">
-                    <a class="page-link" [innerText]="p + 1" (click)="page(p)"></a>
-                </li>
-                <li class="page-item" [ngClass]="{disabled: result.page == result.pageMax}">
-                    <a class="page-link" (click)="page(result.page + 1)">下一頁</a>
-                </li>
-            </ul>
-        </div>
+    </div>
+    <div class="text-center" *ngIf="result.pages.length > 1">
+        <ul class="pagination">
+            <li class="page-item" [ngClass]="{disabled: result.page == 0}">
+                <a class="page-link" (click)="page(result.page - 1)">前一頁</a>
+            </li>
+            <li class="page-item" *ngFor="let p of result.pages" [ngClass]="{active: p == result.page}">
+                <a class="page-link" [innerText]="p + 1" (click)="page(p)"></a>
+            </li>
+            <li class="page-item" [ngClass]="{disabled: result.page == result.pageMax}">
+                <a class="page-link" (click)="page(result.page + 1)">下一頁</a>
+            </li>
+        </ul>
     </div>
 </div>

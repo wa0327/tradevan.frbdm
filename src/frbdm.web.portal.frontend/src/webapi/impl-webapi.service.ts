@@ -1,15 +1,20 @@
-import { environment } from '../environments/environment';
-import { tap } from 'rxjs/operators';
+import { environment as env } from '../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { WebapiService } from './webapi.service';
-import { DatabaseItem, TableSearchArgs, TableSearchResult, TableDetailItem } from './entities';
+import { CurrentLogon, DatabaseItem, TableSearchArgs, TableSearchResult, TableDetailItem, UserSearchResult, UserItem } from './entities';
 
 @Injectable()
 export class ImplWebapiService implements WebapiService {
-    private readonly baseUrl = environment.apiBaseUrl;
+    private readonly baseUrl = env.apiBaseUrl;
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) {
+        env.apiInit.call(env, http);
+    }
+
+    getLogon() {
+        return this.http.get<CurrentLogon>(`${this.baseUrl}/logon/current`);
+    }
 
     getDatabases() {
         const url = `${this.baseUrl}/databases`;
@@ -24,5 +29,23 @@ export class ImplWebapiService implements WebapiService {
     getDataTable(dbId: string, tableId: string) {
         const url = `${this.baseUrl}/databases/${dbId}/datatables/${tableId}`;
         return this.http.get<TableDetailItem>(url);
+    }
+
+    searchUsers(account: string, name: string) {
+        const args = {
+            account,
+            name
+        };
+        const url = `${this.baseUrl}/users?${$.param(args)}`
+        return this.http.get<UserSearchResult>(url);
+    }
+
+    getUser(userId: number) {
+        const url = `${this.baseUrl}/users/${userId}`;
+        return this.http.get<UserItem>(url);
+    }
+
+    saveUser(user: UserItem) {
+        return this.http.post<void>(`${this.baseUrl}/user`, user);
     }
 }
