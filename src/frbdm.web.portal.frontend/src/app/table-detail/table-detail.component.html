@@ -1,4 +1,4 @@
-<div class="container mt-3" *ngIf="dt">
+<div *ngIf="dt">
     <div class="row">
         <div class="form-group col-md-4 col-sm-6">
             <label class="col-form-label">來源</label>
@@ -97,5 +97,10 @@
                 </tbody>
             </table>
         </div>
+    </div>
+    <div class="text-center" *ngIf="dt.db.hasRgf">
+        <button type="button" class="btn btn-primary btn-lg" (click)="downloadRgf();">
+            關聯圖下載
+        </button>
     </div>
 </div>

@@ -3,6 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { WebapiService } from '../../webapi/webapi.service';
 import { TableDetailItem } from '../../webapi/entities';
+import { environment as env } from '../../environments/environment';
 
 @Component({
     selector: 'app-table-detail',
@@ -78,6 +79,11 @@ export class TableDetailComponent implements OnInit {
         }
 
         this.last_codemapButton = btn;
+    }
+
+    downloadRgf() {
+        const url = `${env.apiBaseUrl}/rgf/${this.dbId}`;
+        window.open(url, '_blank');
     }
 
     private hidePopover(btn: JQuery<HTMLElement> | HTMLElement) {
