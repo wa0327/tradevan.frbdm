@@ -32,6 +32,7 @@
         <thead>
             <tr>
                 <th>AD帳號</th>
+                <th>是AD帳號</th>
                 <th>使用者名稱</th>
                 <th>單位名稱</th>
                 <th>使用者角色</th>
@@ -42,6 +43,7 @@
         <tbody>
             <tr *ngFor="let o of result.rows">
                 <td [innerText]="o.account"></td>
+                <td class="text-center" [innerText]="o.isAdAccount ? '✓' : ''"></td>
                 <td [innerText]="o.name"></td>
                 <td [innerText]="o.department"></td>
                 <td [innerText]="o.groupName"></td>
