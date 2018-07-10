@@ -1,4 +1,6 @@
 <h3 class="title">譯碼簿匯入</h3>
+
+<!-- 表單 -->
 <form id="uploadForm" [action]="actionUrl" method="post" enctype="multipart/form-data" (ngSubmit)="submit()" *ngIf="progress == null">
     <div class="form-group row">
         <label for="db" class="col-sm-3 col-form-label">要匯入的檔案</label>
@@ -12,16 +14,8 @@
         </div>
     </div>
 </form>
-<div class="row">
-    <div class="col-xs-12" *ngIf="lastState != null">
-        <h3>最後一次匯入處理結果</h3>
-        <app-table-import-result-item [state]="lastState" name="資料庫主檔"></app-table-import-result-item>
-        <app-table-import-result-item [state]="lastState" name="資料表主檔"></app-table-import-result-item>
-        <app-table-import-result-item [state]="lastState" name="欄位主檔"></app-table-import-result-item>
-        <app-table-import-result-item [state]="lastState" name="代碼表主檔"></app-table-import-result-item>
-        <app-table-import-result-item [state]="lastState" name="代碼表明細檔"></app-table-import-result-item>
-    </div>
-</div>
+
+<!-- 進度條 -->
 <div class="row" *ngIf="progress != null">
     <div class="col-xs-12">
         <label>資料匯入中，請稍候 ...</label>
@@ -31,4 +25,27 @@
             </div>
         </div>
     </div>
-</div>    
+</div>
+
+<!-- 最後一次匯入處理結果 -->
+<div class="row" *ngIf="lastState != null || exceptions != null">
+    <div class="col-xs-12">
+        <h3>最後一次匯入處理結果</h3>
+        <!-- 處理結果 -->
+        <div *ngIf="lastState != null">
+            <app-table-import-result-item [state]="lastState" name="資料庫主檔"></app-table-import-result-item>
+            <app-table-import-result-item [state]="lastState" name="資料表主檔"></app-table-import-result-item>
+            <app-table-import-result-item [state]="lastState" name="欄位主檔"></app-table-import-result-item>
+            <app-table-import-result-item [state]="lastState" name="代碼表主檔"></app-table-import-result-item>
+            <app-table-import-result-item [state]="lastState" name="代碼表明細檔"></app-table-import-result-item>
+        </div>
+        <!-- 例外訊息 -->
+        <div *ngIf="exceptions != null">
+            <label>發生未預期的例外，請將以下訊息轉給系統工程師處理。</label>
+            <div *ngFor="let ex of exceptions">
+                <span class="exception" [innerText]="ex.message"></span>
+                <pre [innerText]="ex.callstack"></pre>
+            </div>
+        </div>
+    </div>
+</div>

@@ -6,7 +6,7 @@ export const environment = {
     useMockData: false,
     apiInit(http: HttpClient) {
         if (!this.useMockData) {
-            http.get(`${this.apiBaseUrl}/login?account=gemini\\admin`).subscribe(logon => {
+            http.get(`${this.apiBaseUrl}/login?account=admin`).subscribe(logon => {
                 console.log('Login Completed!');
                 console.log(logon);
             });

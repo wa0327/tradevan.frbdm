@@ -14,6 +14,7 @@ export class TableImportComponent implements OnInit {
     file: any;
     progress: number;
     lastState: any;
+    exceptions: any[];
 
     constructor(
         private auth: AuthorizationService,
@@ -30,8 +31,20 @@ export class TableImportComponent implements OnInit {
     }
 
     submit() {
-        console.log(this.file);
-        this.blockUI.start('block-ui-main', '檔案處理中 ...');
+        if (this.file == null) {
+            alert('請先選擇檔案！');
+            return;
+        }
+
+        if (!/.xlsx$/i.test(this.file)) {
+            alert('副檔名必需為 xlsx！');
+            return;
+        }
+
+        this.progress = null;
+        this.exceptions = null;
+        this.lastState = null;
+        this.blockUI.start('block-ui-main', '正在上傳檔案 ...');
         const form = document.getElementById('uploadForm') as any
         form.submit();
     }
@@ -51,8 +64,19 @@ export class TableImportComponent implements OnInit {
     }
 
     private getLastState() {
-        this.http.get(`${env.apiBaseUrl}/get-last-import-state`).subscribe(state => {
-            this.lastState = state;
+        this.http.get<any>(`${env.apiBaseUrl}/get-last-import-state`).subscribe(data => {
+            if (data) {
+                if (data.succeed) {
+                    this.lastState = data.state;
+                } else {
+                    this.exceptions = [];
+                    var ex = data.exception;
+                    while (ex) {
+                        this.exceptions.push(ex);
+                        ex = ex.inner;
+                    }
+                }
+            }
         });
     }
 }
