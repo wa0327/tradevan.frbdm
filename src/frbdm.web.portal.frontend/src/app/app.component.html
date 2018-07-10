@@ -1,25 +1,29 @@
 <block-ui message="資料載入中" [delayStart]="500">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-9">
-                <a routerLink="/">
-                    <img src="/assets/logo.png" title="衛生福利部食品藥物管理署">
-                    <img src="/assets/fda.png" title="衛生福利部食品藥物管理署">
-                </a>
-            </div>
-            <div class="col-sm-3" style="text-align: right;" *ngIf="showAdminMenu">
-                <div class="dropdown">
-                    <button class="btn btn-adminMenu dropdown-toggle" type="button" id="adminMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        管理者選單
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="adminMenu">
-                        <li>
-                            <a routerLink="/users">使用者管理</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-9">
+        <a routerLink="/">
+          <img src="/assets/logo.png" title="衛生福利部食品藥物管理署">
+          <img src="/assets/fda.png" title="衛生福利部食品藥物管理署">
+        </a>
+      </div>
+      <div class="col-sm-3" style="text-align: right;" *ngIf="showAdminMenu">
+        <div class="dropdown">
+          <button class="btn btn-adminMenu dropdown-toggle" type="button" id="adminMenu" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="true">
+            管理者選單
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="adminMenu">
+            <li>
+              <a routerLink="/import-tables">譯碼簿匯入</a>
+            </li>
+            <li>
+              <a routerLink="/users">使用者管理</a>
+            </li>
+          </ul>
         </div>
-        <router-outlet></router-outlet>
+      </div>
     </div>
+    <router-outlet></router-outlet>
+  </div>
 </block-ui>

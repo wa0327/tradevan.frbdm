@@ -11,12 +11,15 @@ import { TableDetailComponent } from './table-detail/table-detail.component';
 import { UserSearchComponent } from './user-search/user-search.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
 import { AuthorizationService } from './authorization.service';
+import { TableImportComponent } from './table-import/table-import.component';
+import { TableImportResultItemComponent } from './table-import/table-import-result-item.component';
 
 const routes: Routes = [
     { path: '', redirectTo: '/tables', pathMatch: 'full' },
     { path: 'tables', component: TableSearchComponent },
     { path: 'tables/:dbId/:tableId', component: TableDetailComponent },
     { path: 'tables/:dbId/:tableId/:term', component: TableDetailComponent },
+    { path: 'import-tables', component: TableImportComponent },
     { path: 'users', component: UserSearchComponent },
     { path: 'users/:userId', component: UserEditComponent },
     { path: 'add-user', component: UserEditComponent }
@@ -27,6 +30,8 @@ const routes: Routes = [
         AppComponent,
         TableSearchComponent,
         TableDetailComponent,
+        TableImportComponent,
+        TableImportResultItemComponent,
         UserSearchComponent,
         UserEditComponent
     ],
@@ -36,7 +41,7 @@ const routes: Routes = [
         FormsModule,
         RouterModule.forRoot(routes, { useHash: true }),
         WebapiModule,
-        // BlockUIModule.forRoot(),
+        BlockUIModule.forRoot({delayStart: 0}),
         // BlockUIHttpModule.forRoot()
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],

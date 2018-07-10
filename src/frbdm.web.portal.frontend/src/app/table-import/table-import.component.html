@@ -1,0 +1,34 @@
+<h3 class="title">譯碼簿匯入</h3>
+<form id="uploadForm" [action]="actionUrl" method="post" enctype="multipart/form-data" (ngSubmit)="submit()" *ngIf="progress == null">
+    <div class="form-group row">
+        <label for="db" class="col-sm-3 col-form-label">要匯入的檔案</label>
+        <div class="col-sm-9">
+            <input name="file" type="file" accept=".xlsx" class="form-control" [(ngModel)]="file" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-9 col-sm-offset-3 function-area">
+            <button type="submit" class="btn btn-primary">匯入</button>
+        </div>
+    </div>
+</form>
+<div class="row">
+    <div class="col-xs-12" *ngIf="lastState != null">
+        <h3>最後一次匯入處理結果</h3>
+        <app-table-import-result-item [state]="lastState" name="資料庫主檔"></app-table-import-result-item>
+        <app-table-import-result-item [state]="lastState" name="資料表主檔"></app-table-import-result-item>
+        <app-table-import-result-item [state]="lastState" name="欄位主檔"></app-table-import-result-item>
+        <app-table-import-result-item [state]="lastState" name="代碼表主檔"></app-table-import-result-item>
+        <app-table-import-result-item [state]="lastState" name="代碼表明細檔"></app-table-import-result-item>
+    </div>
+</div>
+<div class="row" *ngIf="progress != null">
+    <div class="col-xs-12">
+        <label>資料匯入中，請稍候 ...</label>
+        <div class="progress">
+            <div class="progress-bar progress-bar-info" [ngStyle]="{'width': progress + '%'}">
+                {{progress}}%
+            </div>
+        </div>
+    </div>
+</div>    

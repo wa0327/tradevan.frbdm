@@ -1,0 +1,13 @@
+<span class="data-title" [innerText]="name"></span>
+<div>
+    <span>共</span>
+    <span class="number" [innerText]="total | number"></span>
+    <span>，完成</span>
+    <span class="number" [innerText]="succeed | number"></span>
+    <span *ngIf="failed > 0">，失敗</span>
+    <span *ngIf="failed > 0" class="number failed" [innerText]="failed | number"></span>
+    <span>。</span>
+    <div *ngFor="let o of failures">
+        -- 行 {{o.row | number}} {{o.error}}
+    </div>
+</div>

@@ -1,0 +1,28 @@
+span.data-title {
+  display: block;
+  margin-top: 15px;
+  font-size: larger;
+
+  &::before {
+    content: '【';
+  }
+
+  &::after {
+    content: '】';
+  }
+}
+
+div {
+  span {
+    color: grey;
+
+    &.number {
+      color: black;
+      font-weight: bold;
+
+      &.failed {
+        color: red;
+      }
+    }
+  }
+}
