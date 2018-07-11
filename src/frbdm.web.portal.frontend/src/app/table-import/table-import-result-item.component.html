@@ -1,5 +1,5 @@
 <span class="data-title" [innerText]="name"></span>
-<div>
+<div *ngIf="total != null">
     <span>共</span>
     <span class="number" [innerText]="total | number"></span>
     <span>，完成</span>
@@ -8,6 +8,8 @@
     <span *ngIf="failed > 0" class="number failed" [innerText]="failed | number"></span>
     <span>。</span>
     <div *ngFor="let o of failures">
-        -- 行 {{o.row | number}} {{o.error}}
+        -- 行
+        <span [innerText]="o.row | number"></span>
+        <div *ngFor="let e of o.errors" [innerText]="e"></div>
     </div>
 </div>

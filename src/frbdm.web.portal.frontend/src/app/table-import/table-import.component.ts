@@ -24,10 +24,11 @@ export class TableImportComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.auth.authorize('系統管理員');
         document.title = '譯碼簿匯入 - FRBDM';
         this.actionUrl = `${env.apiBaseUrl}/import-datatables`;
-        this.getProgress();
+        this.auth.authorize('系統管理員').subscribe(() => {
+            this.getProgress();
+        });
     }
 
     submit() {

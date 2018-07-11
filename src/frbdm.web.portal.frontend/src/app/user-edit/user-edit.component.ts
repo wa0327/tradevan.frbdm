@@ -24,28 +24,29 @@ export class UserEditComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.auth.authorize('系統管理員');
-        switch (this.location.path(false)) {
-            case '/add-user':
-                document.title = '使用者新增 - FRBDM';
-                this.title = '使用者新增';
-                this.user = {
-                    account: '',
-                    name: '',
-                    department: '',
-                    groupId: "A8309AC1-EA48-43EE-A6BE-D97CFD7065AA",
-                    enabled: true
-                };
-                break;
+        this.auth.authorize('系統管理員').subscribe(() => {
+            switch (this.location.path(false)) {
+                case '/add-user':
+                    document.title = '使用者新增 - FRBDM';
+                    this.title = '使用者新增';
+                    this.user = {
+                        account: '',
+                        name: '',
+                        department: '',
+                        groupId: "A8309AC1-EA48-43EE-A6BE-D97CFD7065AA",
+                        enabled: true
+                    };
+                    break;
 
-            default:
-                document.title = '使用者編輯 - FRBDM';
-                this.title = '使用者編輯';
-                const q = this.route.snapshot.params;
-                const userId = parseInt(q['userId']);
-                this.load(userId);
-                break;
-        }
+                default:
+                    document.title = '使用者編輯 - FRBDM';
+                    this.title = '使用者編輯';
+                    const q = this.route.snapshot.params;
+                    const userId = parseInt(q['userId']);
+                    this.load(userId);
+                    break;
+            }
+        });
     }
 
     save() {

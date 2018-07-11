@@ -22,10 +22,12 @@ export class UserSearchComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.auth.authorize('系統管理員');
         document.title = '使用者查詢 - FRBDM';
-        if (this.api.getLogon())
-        this.restore();
+        this.auth.authorize('系統管理員').subscribe(() => {
+            if (this.api.getLogon()) {
+                this.restore();
+            }
+        });
     }
 
     search() {

@@ -14,7 +14,13 @@ export class WebapiInterceptor implements HttpInterceptor {
 
         return res.pipe(catchError(error => {
             console.error(error);
-            alert(`呼叫 ${req.url} 時發生錯誤！`);
+
+            if (error.status == 401) {
+                alert(`Web API 回應未授權，請重新整理後再試。`);
+            } else {
+                alert(`呼叫 ${req.url} 時發生錯誤！`);
+            }
+            
             return of(null);
         }));
     }
