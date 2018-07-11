@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthorizationService } from './authorization.service';
-import { WebapiService } from '../webapi/webapi.service';
 
 @Component({
     selector: 'app-root',
@@ -11,15 +10,13 @@ export class AppComponent implements OnInit {
     showAdminMenu = false;
 
     constructor(
-        private api: WebapiService
+        private auth: AuthorizationService
     ) {
     }
 
     ngOnInit() {
-        this.api.getLogon().subscribe(logon => {
-            if (logon != null) {
-                this.showAdminMenu = logon.roles.some(r => r == '系統管理員');
-            }
+        this.auth.isInRole('系統管理員').subscribe(result => {
+            this.showAdminMenu = result;
         });
     }
 }

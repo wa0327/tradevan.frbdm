@@ -1,8 +1,8 @@
 import { Component, Input, OnInit, ViewChildren, QueryList, ElementRef } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
-import { WebapiService } from '../../webapi/webapi.service';
-import { TableDetailItem } from '../../webapi/entities';
+import { TableDetailItem } from '../entities';
 import { environment as env } from '../../environments/environment';
 
 @Component({
@@ -23,7 +23,7 @@ export class TableDetailComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private sanitizer: DomSanitizer,
-        private api: WebapiService) { }
+        private http: HttpClient) { }
 
     ngOnInit() {
         document.title = '資料表明細 - FRBDM';
@@ -31,7 +31,7 @@ export class TableDetailComponent implements OnInit {
         this.dbId = q['dbId'];
         this.tableId = q['tableId'];
         this.term = q['term'];
-        this.api.getDataTable(this.dbId, this.tableId).subscribe(dt => {
+        this.http.get<TableDetailItem>(`${env.apiBaseUrl}/databases/${this.dbId}/datatables/${this.tableId}`).subscribe(dt => {
             this.dt = dt;
 
             setTimeout(() => {

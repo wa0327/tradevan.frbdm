@@ -1,6 +1,7 @@
+import { environment as env } from '../../environments/environment';
 import { Component, Input, OnInit } from '@angular/core';
-import { WebapiService } from '../../webapi/webapi.service';
-import { UserSearchResult } from '../../webapi/entities';
+import { HttpClient } from '@angular/common/http';
+import { UserSearchResult } from '..//entities';
 import { AuthorizationService } from '../authorization.service';
 
 @Component({
@@ -17,21 +18,23 @@ export class UserSearchComponent implements OnInit {
 
     constructor(
         private auth: AuthorizationService,
-        private api: WebapiService
+        private http: HttpClient
     ) {
     }
 
     ngOnInit() {
         document.title = '使用者查詢 - FRBDM';
         this.auth.authorize('系統管理員').subscribe(() => {
-            if (this.api.getLogon()) {
-                this.restore();
-            }
+            this.restore();
         });
     }
 
     search() {
-        this.api.searchUsers(this.account, this.name).subscribe(result => {
+        const args = {
+            account: this.account,
+            name: this.name
+        };
+        this.http.get<UserSearchResult>(`${env.apiBaseUrl}/users?${$.param(args)}`).subscribe(result => {
             this.result = result;
             this.backup();
         });

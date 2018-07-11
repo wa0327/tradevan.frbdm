@@ -28,9 +28,10 @@
 </div>
 
 <!-- 最後一次匯入處理結果 -->
-<div class="row" *ngIf="lastState != null || exceptions != null">
+<div class="row" *ngIf="lastState != null || lastError != null || exceptions != null">
     <div class="col-xs-12">
         <h4>最後一次匯入處理結果</h4>
+        <h5>檔案名稱：{{lastFileName}}</h5>
         <!-- 處理結果 -->
         <div *ngIf="lastState != null">
             <app-table-import-result-item [state]="lastState" name="資料庫主檔"></app-table-import-result-item>
@@ -38,6 +39,10 @@
             <app-table-import-result-item [state]="lastState" name="欄位主檔"></app-table-import-result-item>
             <app-table-import-result-item [state]="lastState" name="代碼表主檔"></app-table-import-result-item>
             <app-table-import-result-item [state]="lastState" name="代碼表明細檔"></app-table-import-result-item>
+        </div>
+        <!-- 錯誤訊息 -->
+        <div *ngIf="lastError != null">
+            <div class="alert alert-danger" [innerText]="lastError"></div>
         </div>
         <!-- 例外訊息 -->
         <div *ngIf="exceptions != null">

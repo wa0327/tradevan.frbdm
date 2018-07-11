@@ -1,10 +1,10 @@
+import { environment as env } from '../../environments/environment';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { environment as env } from '../../environments/environment';
-import { WebapiService } from '../../webapi/webapi.service';
-import { DatabaseItem, TableSearchArgs } from '../../webapi/entities';
+import { DatabaseItem, TableSearchArgs, TableSearchResult } from '../entities';
 
 @Component({
     selector: 'app-table-search',
@@ -26,14 +26,14 @@ export class TableSearchComponent implements OnInit {
 
     constructor(
         private sanitizer: DomSanitizer,
-        private api: WebapiService
+        private http: HttpClient
     ) {
     }
 
     ngOnInit() {
         document.title = '譯碼簿查詢 - FRBDM';
         this.reset();
-        this.api.getDatabases().subscribe(databases => {
+        this.http.get<DatabaseItem[]>(`${env.apiBaseUrl}/databases`).subscribe(databases => {
             this.databases = databases;
             if (!env.production) {
                 this.db = databases[0];
@@ -147,7 +147,7 @@ export class TableSearchComponent implements OnInit {
         args.page_size = pageSize;
         args.page_index = pageIndex;
 
-        return this.api.searchDataTables(args).pipe(map(data => {
+        return this.http.get<TableSearchResult>(`${env.apiBaseUrl}/datatables?${$.param(args)}`).pipe(map(data => {
             var pageArray = [];
             for (var i = Math.max(0, pageIndex - 3); i < pageIndex; i++) {
                 pageArray.push(i);

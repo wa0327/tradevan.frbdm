@@ -1,9 +1,10 @@
+import { environment as env } from '../../environments/environment';
 import { Component, Input, OnInit } from '@angular/core';
-import { WebapiService } from '../../webapi/webapi.service';
+import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { AuthorizationService } from '../authorization.service';
-import { UserItem } from '../../webapi/entities';
+import { UserItem } from '../entities';
 
 @Component({
     selector: 'app-user-edit',
@@ -19,7 +20,7 @@ export class UserEditComponent implements OnInit {
         private auth: AuthorizationService,
         private route: ActivatedRoute,
         private location: Location,
-        private api: WebapiService
+        private http: HttpClient
     ) {
     }
 
@@ -50,7 +51,7 @@ export class UserEditComponent implements OnInit {
     }
 
     save() {
-        this.api.saveUser(this.user).subscribe(_ => {
+        this.http.post<void>(`${env.apiBaseUrl}/user`, this.user).subscribe(() => {
             alert('儲存成功！');
             document['UserSearchComponent_refresh'] = true;
             this.location.back();
@@ -62,7 +63,7 @@ export class UserEditComponent implements OnInit {
     }
 
     private load(userId: number) {
-        this.api.getUser(userId).subscribe(user => {
+        this.http.get<UserItem>(`${env.apiBaseUrl}/users/${userId}`).subscribe(user => {
             this.user = user;
         });
     }

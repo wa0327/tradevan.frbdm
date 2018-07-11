@@ -1,11 +1,11 @@
-import { Observable, of } from 'rxjs';
-import { tap, catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpInterceptor, HttpRequest, HttpHandler } from '@angular/common/http';
 
 @Injectable()
-export class WebapiInterceptor implements HttpInterceptor {
-    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+export class MyHttpInterceptor implements HttpInterceptor {
+    intercept(req: HttpRequest<any>, next: HttpHandler) {
         req = req.clone({
             withCredentials: true
         });

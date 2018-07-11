@@ -1,8 +1,8 @@
-import { Component, OnInit } from "@angular/core";
 import { environment as env } from '../../environments/environment';
+import { Component, OnInit } from "@angular/core";
+import { HttpClient } from '@angular/common/http';
 import { AuthorizationService } from "../authorization.service";
 import { BlockUIService } from "ng-block-ui";
-import { HttpClient } from "@angular/common/http";
 
 @Component({
     selector: 'app-table-import',
@@ -13,7 +13,9 @@ export class TableImportComponent implements OnInit {
     actionUrl: string;
     file: any;
     progress: number;
+    lastFileName: string;
     lastState: any;
+    lastError: string;
     exceptions: any[];
 
     constructor(
@@ -59,7 +61,7 @@ export class TableImportComponent implements OnInit {
                 this.progress = progress as number;
                 setTimeout(() => {
                     this.getProgress();
-                }, 500);
+                }, 2500);
             }
         });
     }
@@ -67,9 +69,12 @@ export class TableImportComponent implements OnInit {
     private getLastState() {
         this.http.get<any>(`${env.apiBaseUrl}/get-last-import-state`).subscribe(data => {
             if (data) {
+                this.lastFileName = data.fileName;
                 if (data.succeed) {
                     this.lastState = data.state;
-                } else {
+                } else if (data.error) {
+                    this.lastError = data.error;
+                } else if (data.exception) {
                     this.exceptions = [];
                     var ex = data.exception;
                     while (ex) {
