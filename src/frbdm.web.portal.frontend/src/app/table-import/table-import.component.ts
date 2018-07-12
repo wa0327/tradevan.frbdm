@@ -12,10 +12,12 @@ import { BlockUIService } from "ng-block-ui";
 export class TableImportComponent implements OnInit {
     actionUrl: string;
     file: any;
+
+    cancelled: boolean;
     progress: number;
-    lastFileName: string;
-    lastState: any;
-    lastError: string;
+    fileName: string;
+    state: any;
+    error: string;
     exceptions: any[];
 
     constructor(
@@ -30,10 +32,11 @@ export class TableImportComponent implements OnInit {
         this.actionUrl = `${env.apiBaseUrl}/import-datatables`;
         this.auth.authorize('系統管理員').subscribe(() => {
             this.getProgress();
+            // this.progress = 88;
         });
     }
 
-    submit() {
+    import() {
         if (this.file == null) {
             alert('請先選擇檔案！');
             return;
@@ -44,12 +47,21 @@ export class TableImportComponent implements OnInit {
             return;
         }
 
+        this.cancelled = null;
         this.progress = null;
         this.exceptions = null;
-        this.lastState = null;
+        this.state = null;
         this.blockUI.start('block-ui-main', '正在上傳檔案 ...');
         const form = document.getElementById('uploadForm') as any
         form.submit();
+    }
+
+    cancel(btn: HTMLElement) {
+        btn.innerText = '取消中...';
+        btn.setAttribute('disabled', '');
+        console.log(btn);
+        this.http.get(`${env.apiBaseUrl}/cancel-import-datatables`).subscribe(() => {
+        });
     }
 
     private getProgress() {
@@ -67,13 +79,15 @@ export class TableImportComponent implements OnInit {
     }
 
     private getLastState() {
-        this.http.get<any>(`${env.apiBaseUrl}/get-last-import-state`).subscribe(data => {
+        this.http.get<any>(`${env.apiBaseUrl}/get-import-state`).subscribe(data => {
             if (data) {
-                this.lastFileName = data.fileName;
-                if (data.succeed) {
-                    this.lastState = data.state;
+                this.fileName = data.fileName;
+                if (data.cancelled) {
+                    this.cancelled = true;
+                } else if (data.succeed) {
+                    this.state = data.state;
                 } else if (data.error) {
-                    this.lastError = data.error;
+                    this.error = data.error;
                 } else if (data.exception) {
                     this.exceptions = [];
                     var ex = data.exception;
