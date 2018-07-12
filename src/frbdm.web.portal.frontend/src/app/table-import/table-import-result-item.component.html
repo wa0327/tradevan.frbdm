@@ -9,7 +9,7 @@
     <span>。</span>
     <div *ngFor="let o of failures">
         -- 行
-        <span [innerText]="o.row | number"></span>
+        <span [innerText]="o.row + 1 | number"></span>
         <div *ngFor="let e of o.errors" [innerText]="e"></div>
     </div>
 </div>

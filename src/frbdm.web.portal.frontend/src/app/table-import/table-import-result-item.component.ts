@@ -10,7 +10,6 @@ export class TableImportResultItemComponent implements OnInit {
     @Input() name: string;
 
     total: number;
-    ignored: number;
     succeed: number;
     failed: number;
     failures: any;
@@ -18,9 +17,8 @@ export class TableImportResultItemComponent implements OnInit {
     ngOnInit() {
         if (this.state[this.name]) {
             this.total = this.state[this.name].total;
-            this.ignored = this.state[this.name].ignored.length;
             this.succeed = this.state[this.name].succeed.length;
-            this.failed = this.total - this.ignored - this.succeed;
+            this.failed = this.total - this.succeed;
             this.failures = this.state[this.name].failures;
         }
     }

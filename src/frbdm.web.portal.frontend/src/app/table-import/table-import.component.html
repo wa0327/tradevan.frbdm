@@ -13,6 +13,13 @@
             <button class="btn btn-primary" (click)="import()">匯入</button>
         </div>
     </div>
+    <div class="row mt-3">
+        <div class="col-xs-12">
+            <div class="alert alert-info">
+                建議全系覺同一時間只進行一個匯入操作，如有其它人正在匯入，則可能會發生資料庫操作逾時。
+            </div>
+        </div>
+    </div>
 </form>
 
 <!-- 進度條 -->
@@ -27,8 +34,13 @@
             </div>
         </div>
     </div>
-    <div class="col-xs-2 text-center">
+    <div class="col-xs-2">
         <button class="btn btn-default" (click)="cancel($event.target)">取消</button>
+    </div>
+    <div class="col-xs-12">
+        <div class="alert alert-warning">
+            為確保整個流程順利，請勿關閉此畫面；如不小心關閉，重新開啟即可。
+        </div>
     </div>
 </div>
 

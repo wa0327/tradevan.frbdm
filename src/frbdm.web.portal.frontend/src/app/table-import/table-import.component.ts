@@ -32,7 +32,6 @@ export class TableImportComponent implements OnInit {
         this.actionUrl = `${env.apiBaseUrl}/import-datatables`;
         this.auth.authorize('系統管理員').subscribe(() => {
             this.getProgress();
-            // this.progress = 88;
         });
     }
 
