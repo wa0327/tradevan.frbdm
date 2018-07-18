@@ -11,9 +11,8 @@ import { AuthorizationService } from '../authorization.service';
 })
 export class UserSearchComponent implements OnInit {
 
-    @Input() account: string;
-    @Input() name: string;
-
+    account: string;
+    name: string;
     result: UserSearchResult;
 
     constructor(

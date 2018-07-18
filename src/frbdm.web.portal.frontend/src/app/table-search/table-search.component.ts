@@ -14,13 +14,11 @@ import { DatabaseItem, TableSearchArgs, TableSearchResult } from '../entities';
 export class TableSearchComponent implements OnInit {
 
     databases: DatabaseItem[]
-
-    @Input() db: DatabaseItem;
-    @Input() term: string;
-    @Input() forTable: boolean;
-    @Input() forColumn: boolean;
-    @Input() dataDate: string;
-
+    db: DatabaseItem;
+    term: string;
+    forTable: boolean;
+    forColumn: boolean;
+    dataDate: string;
     lastQueryArgs: TableSearchArgs;
     result: PageData;
 
