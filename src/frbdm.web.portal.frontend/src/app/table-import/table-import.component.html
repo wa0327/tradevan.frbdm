@@ -1,4 +1,4 @@
-<h3 class="title">譯碼簿匯入</h3>
+<div class="title">譯碼簿匯入</div>
 
 <!-- 檔案上傳表單 -->
 <form id="uploadForm" [action]="actionUrl" method="post" enctype="multipart/form-data" *ngIf="progress == null">
@@ -23,7 +23,7 @@
 </form>
 
 <!-- 進度條 -->
-<div class="row" *ngIf="progress != null">
+<div class="row result" *ngIf="progress != null">
     <div class="col-xs-12">
         <label>資料匯入中，請稍候 ...</label>
     </div>
@@ -45,7 +45,7 @@
 </div>
 
 <!-- 最後一次匯入處理結果 -->
-<div class="row" *ngIf="state != null || cancelled != null || error != null || exceptions != null">
+<div class="row result" *ngIf="state != null || cancelled != null || error != null || exceptions != null">
     <div class="col-xs-12">
         <h4>最後一次匯入處理結果</h4>
         <h5>檔案名稱：{{fileName}}</h5>
